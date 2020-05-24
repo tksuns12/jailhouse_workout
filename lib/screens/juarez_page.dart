@@ -34,7 +34,7 @@ class JuarezPage extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           'Juarez\'s Valley',
-                          style: TextStyle(color: Colors.red, fontSize: 30),
+                          style: TextStyle(color: Colors.red, fontSize: 45),
                         ),
                       ),
                     ),

@@ -175,9 +175,11 @@ class DeckOfDeathProvider with ChangeNotifier {
   int displayedMin;
   int displayedSec;
   AudioCache player;
+  bool isInifinite;
 
   DeckOfDeathProvider() {
     rest = Hive.box('AppData').get(kDeckTimeLimitKey);
+    isInifinite = Hive.box('AppData').get(kDeckIsInfiniteKey);
   }
 
   void initialize() {
@@ -206,27 +208,42 @@ class DeckOfDeathProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void changeInfiniteMode() {
+    if (isInifinite) {
+      isInifinite = false;
+    } else {
+      isInifinite = true;
+    }
+    notifyListeners();
+  }
+
   void start() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) async {
-      if (deck.length == 0) {
-        await player.play('sounds/oh_yeah.mp3');
-        isDone = true;
-        timer.cancel();
-      } else {
-        if (displayedSec == 0 && displayedMin > 0) {
-          displayedSec = 59;
-          if (displayedMin == 0) {
-            await player.play('sounds/sigh.mp3');
-            isFailed = true;
-            isDone = true;
-          }
-          displayedMin--;
+    if (!isInifinite) {
+      timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+        if (deck.length == 0) {
+          await player.play('sounds/oh_yeah.mp3');
+          isDone = true;
+          timer.cancel();
         } else {
-          displayedSec--;
+          if (displayedSec == 0 && displayedMin > 0) {
+            displayedSec = 59;
+            if (displayedMin == 0) {
+              await player.play('sounds/sigh.mp3');
+              isFailed = true;
+              isDone = true;
+            }
+            displayedMin--;
+          } else {
+            displayedSec--;
+          }
         }
-        notifyListeners();
+      });
+    } else {
+      if (deck.length == 0) {
+        isDone = true;
       }
-    });
+    }
+    notifyListeners();
   }
 
   void next() {

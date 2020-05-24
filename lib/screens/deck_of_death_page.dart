@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hive/hive.dart';
+import 'package:jailhouseworkout/prefs.dart';
 import 'package:provider/provider.dart';
 import 'deck_of_death_screen.dart';
 import 'package:jailhouseworkout/providers.dart';
@@ -17,12 +19,15 @@ class DeckOfDeathPage extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Icon(FontAwesomeIcons.chevronLeft, color: Colors.grey,),
+              Icon(
+                FontAwesomeIcons.chevronLeft,
+                color: Colors.grey,
+              ),
               Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 330),
+                      padding: const EdgeInsets.only(bottom: 300),
                       child: Container(
                         decoration: BoxDecoration(
                             color: Colors.white24,
@@ -31,11 +36,26 @@ class DeckOfDeathPage extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             'Deck of Death',
-                            style:
-                                TextStyle(color: Colors.greenAccent, fontSize: 45),
+                            style: TextStyle(
+                                color: Colors.greenAccent, fontSize: 45),
                           ),
                         ),
                       ),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text('No Limit Mode', style: TextStyle(color: Colors.green),),
+                        Container(
+                          child: Switch(
+                            inactiveTrackColor: Colors.grey,
+                            activeColor: Colors.greenAccent,
+                              value: death.isInifinite,
+                              onChanged: (value) {
+                                death.changeInfiniteMode();
+                                Hive.box('AppData').put(kDeckIsInfiniteKey, value);
+                              }),
+                        ),
+                      ],
                     ),
                     FlatButton(
                       onPressed: () {
@@ -58,7 +78,7 @@ class DeckOfDeathPage extends StatelessWidget {
                       ),
                     ),
                   ]),
-                  Icon(FontAwesomeIcons.chevronRight),
+              Icon(FontAwesomeIcons.chevronRight),
             ],
           ),
         );

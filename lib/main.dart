@@ -18,7 +18,8 @@ Future<void> main() async {
       ..put(kJuarezRestKey, 15)
       ..put(kPyramidHeightKey, 10)
       ..put(kPyramidRestWeightKey, 10)
-      ..put(kDeckTimeLimitKey, 15);
+      ..put(kDeckTimeLimitKey, 15)
+      ..put(kDeckIsInfiniteKey, true);
   }
 
   runApp(MyApp());
