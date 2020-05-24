@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:jailhouseworkout/prefs.dart';
@@ -209,7 +208,7 @@ class DeckOfDeathProvider with ChangeNotifier {
 
   void start() {
     timer = Timer.periodic(Duration(seconds: 1), (timer) async {
-      if (displayedSec < 1 && displayedMin < 1) {
+      if (deck.length == 0) {
         await player.play('sounds/oh_yeah.mp3');
         isDone = true;
         timer.cancel();
@@ -220,6 +219,7 @@ class DeckOfDeathProvider with ChangeNotifier {
           if (displayedMin == 0) {
             await player.play('sounds/sigh.mp3');
             isFailed = true;
+            isDone = true;
           }
         } else {
           displayedSec--;

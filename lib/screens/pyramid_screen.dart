@@ -22,43 +22,57 @@ class PyramidScreen extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text('REST', style: TextStyle(color: Colors.amberAccent, fontSize: 60)),
+                          Text('REST',
+                              style: TextStyle(
+                                  color: Colors.amberAccent, fontSize: 60)),
                           Text('${pyramid.displayedRestingTime}',
-                              style: TextStyle(color: Colors.white, fontSize: 35)),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 35)),
                         ],
                       ),
                     )
-                  : Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text('REPS',
-                              style: TextStyle(
-                                  color: Colors.amberAccent, fontSize: 60)),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 50),
-                            child: Text('${pyramid.displayedReps}',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 35)),
+                  : pyramid.isDone
+                      ? (Container(
+                          color: Colors.black,
+                          child: Center(
+                              child: Text(
+                            'Well Done!',
+                            style: TextStyle(color: Colors.amberAccent, fontSize: 70),
+                          )),
+                        ))
+                      : Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text('REPS',
+                                  style: TextStyle(
+                                      color: Colors.amberAccent, fontSize: 60)),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 50),
+                                child: Text('${pyramid.displayedReps}',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 35)),
+                              ),
+                              FlatButton(
+                                  onPressed: () {
+                                    pyramid.next();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.amberAccent,
+                                        borderRadius: BorderRadius.circular(5)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text('NEXT',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 50)),
+                                    ),
+                                  )),
+                            ],
                           ),
-                          FlatButton(
-                              onPressed: () {
-                                pyramid.next();
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.amberAccent,
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text('NEXT',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 50)),
-                                ),
-                              )),
-                        ],
-                      ),
-                    ),
+                        ),
             ),
           ),
         );
