@@ -213,14 +213,14 @@ class DeckOfDeathProvider with ChangeNotifier {
         isDone = true;
         timer.cancel();
       } else {
-        if (displayedSec == 0) {
+        if (displayedSec == 0 && displayedMin > 0) {
           displayedSec = 59;
-          displayedMin--;
           if (displayedMin == 0) {
             await player.play('sounds/sigh.mp3');
             isFailed = true;
             isDone = true;
           }
+          displayedMin--;
         } else {
           displayedSec--;
         }

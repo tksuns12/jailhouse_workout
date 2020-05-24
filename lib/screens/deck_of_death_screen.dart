@@ -13,21 +13,25 @@ class DeckOfDeathScreen extends StatelessWidget {
             return Future(() => true);
           },
           child: deck.isDone
-              ? deck.isFailed?(Container(
-                          color: Colors.black,
-                          child: Center(
-                              child: Text(
-                            'Time is Up :(\n Try Next Time!',
-                            style: TextStyle(color: Colors.red, fontSize: 70),
+              ? deck.isFailed?Material(
+                              child: (Container(
+                            color: Colors.black,
+                            child: Center(
+                                child: Text(
+                              'Time is Up :(\n Try Next Time!',
+                              style: TextStyle(color: Colors.greenAccent, fontSize: 70),
+                            )),
                           )),
-                        )):(Container(
-                  color: Colors.black,
-                  child: Center(
-                      child: Text(
-                    'Well Done!',
-                    style: TextStyle(color: Colors.greenAccent, fontSize: 70),
+              ):Material(
+                              child: (Container(
+                    color: Colors.black,
+                    child: Center(
+                        child: Text(
+                      'Well Done!',
+                      style: TextStyle(color: Colors.greenAccent, fontSize: 70),
+                    )),
                   )),
-                ))
+              )
               : Material(
                   color: Colors.black,
                   child: SafeArea(
@@ -50,7 +54,7 @@ class DeckOfDeathScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: Text(
-                            'REPS: ${deck.displayedCard.reps}',
+                            'REPS: ${deck.displayedCard.reps} / ${deck.deck.length} cards left',
                             style: TextStyle(color: Colors.green, fontSize: 20),
                           ),
                         ),
