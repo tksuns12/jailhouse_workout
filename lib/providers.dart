@@ -137,7 +137,7 @@ class PyramidProvider with ChangeNotifier {
           if (restTime < 5) {
             await player.play('sounds/short_beep.mp3');
             if (reps.length == 0) {
-              await player.play('sounds/oh_yeah.wav');
+              await player.play('sounds/oh_yeah.mp3');
               isDone = true;
             }
           }
@@ -210,7 +210,7 @@ class DeckOfDeathProvider with ChangeNotifier {
   void start() {
     timer = Timer.periodic(Duration(seconds: 1), (timer) async {
       if (displayedSec < 1 && displayedMin < 1) {
-        await player.play('sounds/oh_yeah.wav');
+        await player.play('sounds/oh_yeah.mp3');
         isDone = true;
         timer.cancel();
       } else {
@@ -218,7 +218,7 @@ class DeckOfDeathProvider with ChangeNotifier {
           displayedSec = 59;
           displayedMin--;
           if (displayedMin == 0) {
-            await player.play('sounds/sigh.wav');
+            await player.play('sounds/sigh.mp3');
             isFailed = true;
           }
         } else {
