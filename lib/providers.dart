@@ -16,6 +16,7 @@ class JuarezProvider with ChangeNotifier {
   String displayedRestingTime;
   String displayedReps;
   bool isResting = false;
+  bool isDone;
   Timer timer;
   AudioCache player;
 
@@ -26,6 +27,7 @@ class JuarezProvider with ChangeNotifier {
   }
 
   void initialize() {
+    isDone = false;
     isResting = false;
     reps.clear();
     for (int i = _height; i > 0; --i) {
@@ -58,6 +60,10 @@ class JuarezProvider with ChangeNotifier {
         } else {
           if (restTime < 5) {
             await player.play('sounds/short_beep.mp3');
+            if (reps.length == 0) {
+              await player.play('sounds/oh_yeah.mp3');
+              isDone = true;
+            }
           }
           displayedRestingTime = restTime.toString();
           --restTime;
@@ -89,6 +95,7 @@ class PyramidProvider with ChangeNotifier {
   List<int> rest = [];
   Timer timer;
   AudioCache player;
+  bool isDone;
 
   PyramidProvider() {
     _height = Hive.box('AppData').get(kPyramidHeightKey);
@@ -96,6 +103,7 @@ class PyramidProvider with ChangeNotifier {
   }
 
   void initialize() {
+    isDone = false;
     isResting = false;
     reps.clear();
     for (int i = 1; i <= height; ++i) {
@@ -128,6 +136,10 @@ class PyramidProvider with ChangeNotifier {
         } else {
           if (restTime < 5) {
             await player.play('sounds/short_beep.mp3');
+            if (reps.length == 0) {
+              await player.play('sounds/oh_yeah.wav');
+              isDone = true;
+            }
           }
           displayedRestingTime = restTime.toString();
           --restTime;
@@ -160,15 +172,19 @@ class DeckOfDeathProvider with ChangeNotifier {
   _Card displayedCard;
   int rest;
   bool isDone = false;
+  bool isFailed = false;
   int displayedMin;
   int displayedSec;
+  AudioCache player;
 
   DeckOfDeathProvider() {
     rest = Hive.box('AppData').get(kDeckTimeLimitKey);
   }
 
   void initialize() {
+    player = AudioCache();
     isDone = false;
+    isFailed = false;
     deck.clear();
     for (CardType type in CardType.values) {
       for (int i = 1; i < 14; ++i) {
@@ -192,14 +208,19 @@ class DeckOfDeathProvider with ChangeNotifier {
   }
 
   void start() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) async {
       if (displayedSec < 1 && displayedMin < 1) {
+        await player.play('sounds/oh_yeah.wav');
         isDone = true;
         timer.cancel();
       } else {
         if (displayedSec == 0) {
           displayedSec = 59;
           displayedMin--;
+          if (displayedMin == 0) {
+            await player.play('sounds/sigh.wav');
+            isFailed = true;
+          }
         } else {
           displayedSec--;
         }

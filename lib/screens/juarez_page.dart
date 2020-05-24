@@ -5,7 +5,6 @@ import 'package:jailhouseworkout/prefs.dart';
 import 'package:jailhouseworkout/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'juarez_screen.dart';
 
 class JuarezPage extends StatelessWidget {
