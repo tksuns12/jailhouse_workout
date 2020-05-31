@@ -7,9 +7,11 @@ import 'package:jailhouseworkout/screens/deck_of_death_page.dart';
 import 'package:jailhouseworkout/screens/juarez_page.dart';
 import 'package:jailhouseworkout/screens/pyramid_page.dart';
 import 'package:provider/provider.dart';
+import 'package:wakelock/wakelock.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Wakelock.enable();
   await Hive.initFlutter();
   var box = await Hive.openBox('AppData');
   if (box.isEmpty) {

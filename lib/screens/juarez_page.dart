@@ -20,7 +20,7 @@ class JuarezPage extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Icon(FontAwesomeIcons.chevronLeft),
+              SizedBox(width: 10,),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

@@ -224,6 +224,7 @@ class DeckOfDeathProvider with ChangeNotifier {
           await player.play('sounds/oh_yeah.mp3');
           isDone = true;
           timer.cancel();
+          notifyListeners();
         } else {
           if (displayedSec == 0 && displayedMin > 0) {
             displayedSec = 59;
@@ -233,17 +234,20 @@ class DeckOfDeathProvider with ChangeNotifier {
               isDone = true;
             }
             displayedMin--;
+            notifyListeners();
           } else {
             displayedSec--;
+            notifyListeners();
           }
         }
       });
     } else {
       if (deck.length == 0) {
         isDone = true;
+        notifyListeners();
       }
     }
-    notifyListeners();
+    
   }
 
   void next() {
