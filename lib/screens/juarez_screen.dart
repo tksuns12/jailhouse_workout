@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jailhouseworkout/providers.dart';
+import 'package:jailhouseworkout/providers/juarez_providers.dart';
 import 'package:provider/provider.dart';
 
 class JuarezScreen extends StatelessWidget {

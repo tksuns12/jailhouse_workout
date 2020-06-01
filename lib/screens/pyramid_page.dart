@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:jailhouseworkout/prefs.dart';
-import 'package:jailhouseworkout/providers.dart';
+import 'package:jailhouseworkout/providers/pyramid.providers.dart';
 import 'package:jailhouseworkout/screens/pyramid_screen.dart';
 import 'package:provider/provider.dart';
 

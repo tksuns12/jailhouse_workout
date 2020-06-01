@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jailhouseworkout/providers.dart';
+import 'package:jailhouseworkout/providers/deck_of_death.dart';
 import 'package:provider/provider.dart';
 
 class DeckOfDeathScreen extends StatelessWidget {

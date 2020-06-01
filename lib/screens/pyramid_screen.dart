@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jailhouseworkout/providers.dart';
+import 'package:jailhouseworkout/providers/pyramid.providers.dart';
 import 'package:provider/provider.dart';
 
 class PyramidScreen extends StatelessWidget {
