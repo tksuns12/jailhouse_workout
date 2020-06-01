@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:jailhouseworkout/prefs.dart';
-import 'package:jailhouseworkout/providers/juarez_providers.dart';
+import 'package:jailhouseworkout/providers/juarez_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'juarez_screen.dart';

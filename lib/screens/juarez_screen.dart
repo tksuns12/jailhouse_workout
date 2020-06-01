@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jailhouseworkout/providers/juarez_providers.dart';
+import 'package:jailhouseworkout/providers/juarez_provider.dart';
 import 'package:provider/provider.dart';
 
 class JuarezScreen extends StatelessWidget {
@@ -55,8 +55,8 @@ class JuarezScreen extends StatelessWidget {
                                         color: Colors.white, fontSize: 35)),
                               ),
                               FlatButton(
-                                  onPressed: () {
-                                    juarez.next();
+                                  onPressed: () async {
+                                   juarez.next();
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(

@@ -44,8 +44,9 @@ class DeckOfDeathProvider with ChangeNotifier {
 
     displayedCard = deck.first;
     deck.removeAt(0);
-    displayedMin = rest;
-    displayedSec = 0;
+    rest = 15*60;
+    displayedMin = rest ~/ 60;
+    displayedSec = rest % 60;
     notifyListeners();
   }
 
@@ -67,26 +68,18 @@ class DeckOfDeathProvider with ChangeNotifier {
           timer.cancel();
           notifyListeners();
         } else {
-          if (displayedSec == 0 && displayedMin > 0) {
-            displayedSec = 59;
-            if (displayedMin == 0) {
-              await player.play('sounds/sigh.mp3');
-              isFailed = true;
-              isDone = true;
-            }
-            displayedMin--;
-            notifyListeners();
-          } else {
-            displayedSec--;
-            notifyListeners();
+          displayedSec = (--rest) % 60;
+          displayedMin = rest ~/ 60;
+          notifyListeners();
+          if (rest <1) {
+            await player.play('sounds/sigh.mp3');
           }
+          else if (rest % 60 == 0) {
+            print("1 minute passed");
+          }
+          
         }
-      });
-    } else {
-      if (deck.length == 0) {
-        isDone = true;
-        notifyListeners();
-      }
+       });
     }
   }
 

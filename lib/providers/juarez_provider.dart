@@ -46,27 +46,28 @@ class JuarezProvider with ChangeNotifier {
   }
 
   void next() {
-    if (!this.isResting) {
-      int restTime = this.rest;
+    if (reps.length == 0) {
+      isDone = true;
+      isResting = false;
+      notifyListeners();
+    } else {
       isResting = true;
+      int restsec = this.rest;
+
       timer = Timer.periodic(Duration(seconds: 1), (timer) async {
-        if (restTime < 1) {
-          if (reps.length == 0) {
-            await player.play('sounds/oh_yeah.mp3');
-            isDone = true;
-          }
-          isResting = false;
-          onRestFinished();
-          timer.cancel();
-          notifyListeners();
-        } else {
-          if (restTime < 5) {
+        if (restsec >= 1) {
+          displayedRestingTime = (restsec--).toString();
+          if (restsec < 5) {
             await player.play('sounds/short_beep.mp3');
           }
-          displayedRestingTime = restTime.toString();
-          --restTime;
-          notifyListeners();
+        } else {
+          displayedReps = reps.first.toString();
+          reps.removeAt(0);
+          await player.play('sounds/long_beep.mp3');
+          isResting = false;
+          timer.cancel();
         }
+        notifyListeners();
       });
     }
   }
@@ -80,4 +81,3 @@ class JuarezProvider with ChangeNotifier {
     }
   }
 }
-

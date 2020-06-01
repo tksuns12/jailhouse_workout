@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:jailhouseworkout/prefs.dart';
-import 'package:jailhouseworkout/providers/deck_of_death.dart';
+import 'package:jailhouseworkout/providers/deck_of_death_provider.dart';
 import 'package:provider/provider.dart';
 import 'deck_of_death_screen.dart';
 

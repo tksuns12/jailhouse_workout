@@ -33,7 +33,7 @@ class PyramidProvider with ChangeNotifier {
     for (int i = 1; i <= height; ++i) {
       this.reps.add(i);
     }
-    this.reps.addAll(reps.sublist(0, (reps.length - 2)).reversed.toList());
+    this.reps.addAll(reps.sublist(0, (reps.length - 1)).reversed.toList());
 
     rest.clear();
     for (int rep in reps) {
@@ -41,43 +41,38 @@ class PyramidProvider with ChangeNotifier {
     }
     isResting = false;
     this.displayedReps = reps.first.toString();
+    reps.removeAt(0);
 
     notifyListeners();
   }
 
-  void next() async {
-    if (!this.isResting && rest.length > 0) {
-      int restTime = rest.first;
+  void next() {
+    if (reps.length == 0) {
+      isDone = true;
+      isResting = false;
+      notifyListeners();
+    } else {
+      print(reps);
       isResting = true;
-      timer = Timer.periodic(Duration(seconds: 1), (timer) async {
-        if (restTime < 1) {
-          if (reps.length == 0) {
-            await player.play('sounds/oh_yeah.mp3');
-            isDone = true;
-          }
-          await onRestFinished();
-          reps.removeAt(0);
-          displayedReps = reps.first.toString();
-          rest.removeAt(0);
+      int restsec = rest.first;
 
-          timer.cancel();
-          isResting = false;
-          notifyListeners();
-          print(displayedReps);
-        } else {
-          if (restTime < 5) {
+      timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+        if (restsec >= 1) {
+          displayedRestingTime = (restsec--).toString();
+          if (restsec < 5) {
             await player.play('sounds/short_beep.mp3');
           }
-          displayedRestingTime = restTime.toString();
-          --restTime;
-          notifyListeners();
+        } else {
+          print(reps);
+          displayedReps = reps.first.toString();
+          reps.removeAt(0);
+          await player.play('sounds/long_beep.mp3');
+          isResting = false;
+          timer.cancel();
         }
+        notifyListeners();
       });
     }
-  }
-
-  Future<void> onRestFinished() async {
-    await player.play('sounds/long_beep.mp3');
   }
 
   void setHeight(int newHeight) {
@@ -87,4 +82,3 @@ class PyramidProvider with ChangeNotifier {
     }
   }
 }
-
