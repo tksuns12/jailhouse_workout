@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:jailhouseworkout/deck_of_death_screen.dart';
 import 'package:jailhouseworkout/providers/deck_of_death_provider.dart';
 import 'package:jailhouseworkout/providers/juarez_provider.dart';
 import 'package:jailhouseworkout/providers/pyramid.provider.dart';
 import 'package:jailhouseworkout/screens/jurarez_screen.dart';
 import 'package:jailhouseworkout/screens/pyramid_screen.dart';
 import 'package:provider/provider.dart';
+import 'deck_of_death_screen.dart';
 
 class MainScreen extends StatelessWidget {
   @override
