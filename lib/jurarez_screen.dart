@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:hive/hive.dart';
 import 'package:jailhouseworkout/prefs.dart';
-import 'package:jailhouseworkout/providers/pyramid.provider.dart';
+import 'package:jailhouseworkout/providers/juarez_provider.dart';
 import 'package:provider/provider.dart';
 
-class PyramidScreen extends StatelessWidget {
+class JuarezScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(
-      builder: (BuildContext context, PyramidProvider pyramid, Widget child) {
+      builder: (BuildContext context, JuarezProvider juarez, Widget child) {
         return WillPopScope(
             child: Material(
               color: Color(0xFFe0e5ec),
@@ -22,9 +22,9 @@ class PyramidScreen extends StatelessWidget {
                   centerTitle: true,
                   backgroundColor: Color(0xFFe0e5ec),
                   elevation: 0,
-                  title: Text("Pyramid & Reverse Pyramid"),
+                  title: Text("Juarez's Valley"),
                 ),
-                body: pyramid.isDone
+                body: juarez.isDone
                     ? Container(
                         child: Center(
                           child: Text("Well Done!"),
@@ -39,12 +39,12 @@ class PyramidScreen extends StatelessWidget {
                             width: 350,
                             child: NeumorphicButton(
                               isEnabled:
-                                  (!pyramid.hasBegun || !pyramid.isResting),
+                                  (!juarez.hasBegun || !juarez.isResting),
                               onPressed: () {
-                                if (!pyramid.hasBegun) {
-                                  pyramid.start();
-                                } else if (!pyramid.isResting) {
-                                  pyramid.next();
+                                if (!juarez.hasBegun) {
+                                  juarez.start();
+                                } else if (!juarez.isResting) {
+                                  juarez.next();
                                 }
                               },
                               margin: EdgeInsets.all(20),
@@ -52,9 +52,9 @@ class PyramidScreen extends StatelessWidget {
                               boxShape: NeumorphicBoxShape.circle(),
                               style: NeumorphicStyle(
                                   surfaceIntensity:
-                                      pyramid.isResting ? 0.8 : 0.45,
-                                  shape: pyramid.hasBegun
-                                      ? pyramid.isResting
+                                      juarez.isResting ? 0.8 : 0.45,
+                                  shape: juarez.hasBegun
+                                      ? juarez.isResting
                                           ? NeumorphicShape.concave
                                           : NeumorphicShape.flat
                                       : NeumorphicShape.convex,
@@ -62,7 +62,7 @@ class PyramidScreen extends StatelessWidget {
                                   lightSource: LightSource.topLeft,
                                   border: NeumorphicBorder(
                                       color: Colors.white, width: 3.5),
-                                  depth: pyramid.isResting ? -10 : 10,
+                                  depth: juarez.isResting ? -10 : 10,
                                   color: Color(0xFFe0e5ec)),
                               child: AnimatedSwitcher(
                                 transitionBuilder: (child, animation) {
@@ -75,16 +75,16 @@ class PyramidScreen extends StatelessWidget {
                                   );
                                 },
                                 duration: Duration(milliseconds: 500),
-                                child: pyramid.hasBegun
-                                    ? pyramid.isResting
+                                child: juarez.hasBegun
+                                    ? juarez.isResting
                                         ? Text(
-                                            "${pyramid.displayedRestingTime}",
+                                            "${juarez.displayedRestingTime}",
                                             key: ValueKey(0),
                                             style: TextStyle(fontSize: 50),
                                             textAlign: TextAlign.center,
                                           )
                                         : Text(
-                                            "REPS\n${pyramid.displayedReps}",
+                                            "REPS\n${juarez.displayedReps}",
                                             key: ValueKey(1),
                                             style: TextStyle(fontSize: 50),
                                             textAlign: TextAlign.center,
@@ -132,7 +132,7 @@ class PyramidScreen extends StatelessWidget {
                                       style: TextStyle(fontSize: 15),
                                     ),
                                     NeumorphicButton(
-                                      isEnabled: !pyramid.hasBegun,
+                                      isEnabled: !juarez.hasBegun,
                                       onPressed: () {
                                         final _formKey0 =
                                             GlobalKey<FormState>();
@@ -157,7 +157,7 @@ class PyramidScreen extends StatelessWidget {
                                                     controller:
                                                         TextEditingController()
                                                           ..text =
-                                                              "${pyramid.height}",
+                                                              "${juarez.height}",
                                                     validator: (value) {
                                                       if (value.length == 0) {
                                                         return 'Enter Some Number';
@@ -181,7 +181,7 @@ class PyramidScreen extends StatelessWidget {
                                                         border:
                                                             InputBorder.none,
                                                         hintText:
-                                                            "Enter Height of Pyramid",
+                                                            "Enter Height of Valley",
                                                         contentPadding:
                                                             EdgeInsets.all(10)),
                                                   ),
@@ -205,12 +205,12 @@ class PyramidScreen extends StatelessWidget {
                                                       } else if (_formKey0
                                                           .currentState
                                                           .validate()) {
-                                                        pyramid.setHeight(
+                                                        juarez.setHeight(
                                                             int.parse(text));
                                                         await Hive.box(
                                                                 "AppData")
                                                             .put(
-                                                                kPyramidHeightKey,
+                                                                kJuarezHeightKey,
                                                                 int.parse(
                                                                     text));
                                                         Navigator.of(context)
@@ -239,7 +239,7 @@ class PyramidScreen extends StatelessWidget {
                                       style: NeumorphicStyle(
                                           color: Color(0xFFe0e5ec)),
                                       child: Text(
-                                        "${pyramid.height}",
+                                        "${juarez.height}",
                                         style: TextStyle(fontSize: 30),
                                       ),
                                     )
@@ -266,7 +266,7 @@ class PyramidScreen extends StatelessWidget {
                                       style: TextStyle(fontSize: 15),
                                     ),
                                     NeumorphicButton(
-                                      isEnabled: !pyramid.hasBegun,
+                                      isEnabled: !juarez.hasBegun,
                                       onPressed: () {
                                         final _formKey1 =
                                             GlobalKey<FormState>();
@@ -291,7 +291,7 @@ class PyramidScreen extends StatelessWidget {
                                                     controller:
                                                         TextEditingController()
                                                           ..text =
-                                                              "${pyramid.restWeight}",
+                                                              "${juarez.rest}",
                                                     validator: (value) {
                                                       if (value.length == 0) {
                                                         return 'Enter Some Number';
@@ -339,12 +339,12 @@ class PyramidScreen extends StatelessWidget {
                                                       } else if (_formKey1
                                                           .currentState
                                                           .validate()) {
-                                                        pyramid.setRestWeight(
+                                                        juarez.setRest(
                                                             int.parse(text));
                                                         await Hive.box(
                                                                 "AppData")
                                                             .put(
-                                                                kPyramidRestWeightKey,
+                                                                kJuarezRestKey,
                                                                 int.parse(
                                                                     text));
                                                         Navigator.of(context)
@@ -373,7 +373,7 @@ class PyramidScreen extends StatelessWidget {
                                       style: NeumorphicStyle(
                                           color: Color(0xFFe0e5ec)),
                                       child: Text(
-                                        "${pyramid.restWeight}",
+                                        "${juarez.rest}",
                                         style: TextStyle(fontSize: 30),
                                       ),
                                     )
@@ -387,8 +387,8 @@ class PyramidScreen extends StatelessWidget {
               ),
             ),
             onWillPop: () {
-              if (pyramid.isResting) {
-                pyramid.timer.cancel();
+              if (juarez.isResting) {
+                juarez.timer.cancel();
               }
               return Future(() => true);
             });

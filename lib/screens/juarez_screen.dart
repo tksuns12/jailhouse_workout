@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jailhouseworkout/providers/juarez_provider.dart';
 import 'package:provider/provider.dart';
 
-class JuarezScreen extends StatelessWidget {
+class FakeJuarezScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(

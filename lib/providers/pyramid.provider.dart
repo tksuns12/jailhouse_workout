@@ -10,6 +10,7 @@ class PyramidProvider with ChangeNotifier {
   int _height;
   get height => _height;
 
+  bool hasBegun = false;
   bool isResting = false;
   String displayedRestingTime;
   String displayedReps;
@@ -29,6 +30,8 @@ class PyramidProvider with ChangeNotifier {
   void initialize() {
     isDone = false;
     isResting = false;
+    hasBegun = true;
+    hasBegun = false;
     reps.clear();
     for (int i = 1; i <= height; ++i) {
       this.reps.add(i);
@@ -39,10 +42,14 @@ class PyramidProvider with ChangeNotifier {
     for (int rep in reps) {
       this.rest.add(rep * restWeight);
     }
-    isResting = false;
     this.displayedReps = reps.first.toString();
     reps.removeAt(0);
 
+    notifyListeners();
+  }
+
+  void start() {
+    this.hasBegun = true;
     notifyListeners();
   }
 
@@ -52,9 +59,9 @@ class PyramidProvider with ChangeNotifier {
       isResting = false;
       notifyListeners();
     } else {
-      print(reps);
       isResting = true;
       int restsec = rest.first;
+      rest.removeAt(0);
 
       timer = Timer.periodic(Duration(seconds: 1), (timer) async {
         if (restsec >= 1) {
@@ -63,7 +70,6 @@ class PyramidProvider with ChangeNotifier {
             await player.play('sounds/short_beep.mp3');
           }
         } else {
-          print(reps);
           displayedReps = reps.first.toString();
           reps.removeAt(0);
           await player.play('sounds/long_beep.mp3');
@@ -78,6 +84,13 @@ class PyramidProvider with ChangeNotifier {
   void setHeight(int newHeight) {
     if (newHeight > 0) {
       _height = newHeight;
+      notifyListeners();
+    }
+  }
+
+  void setRestWeight(int restWeight) {
+    if (restWeight > 0) {
+      this.restWeight = restWeight;
       notifyListeners();
     }
   }

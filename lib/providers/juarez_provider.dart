@@ -17,6 +17,7 @@ class JuarezProvider with ChangeNotifier {
   bool isDone;
   Timer timer;
   AudioCache player;
+  bool hasBegun = false;
 
   JuarezProvider() {
     player = AudioCache();
@@ -25,6 +26,7 @@ class JuarezProvider with ChangeNotifier {
   }
 
   void initialize() {
+    hasBegun = false;
     isDone = false;
     isResting = false;
     reps.clear();
@@ -38,9 +40,20 @@ class JuarezProvider with ChangeNotifier {
     reps.removeAt(0);
   }
 
+  void start() {
+    hasBegun = true;
+  }
+
   void setHeight(int newHeight) {
     if (newHeight > 0) {
       _height = newHeight;
+      notifyListeners();
+    }
+  }
+
+  void setRest(int newRest) {
+    if (newRest > 0) {
+      this.rest = newRest;
       notifyListeners();
     }
   }

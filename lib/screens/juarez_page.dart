@@ -105,7 +105,7 @@ class JuarezPage extends StatelessWidget {
                           if(result.isGranted){
                           juarez.initialize();
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => JuarezScreen()));}
+                              builder: (context) => FakeJuarezScreen()));}
                         },
                         child: Container(
                             decoration: BoxDecoration(
