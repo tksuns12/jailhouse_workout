@@ -16,14 +16,16 @@ class DeckOfDeathProvider with ChangeNotifier {
   int displayedMin;
   int displayedSec;
   AudioCache player;
-  bool isInifinite;
+  bool isInfinite;
+  bool hasBegun;
 
   DeckOfDeathProvider() {
     rest = Hive.box('AppData').get(kDeckTimeLimitKey);
-    isInifinite = Hive.box('AppData').get(kDeckIsInfiniteKey);
+    isInfinite = Hive.box('AppData').get(kDeckIsInfiniteKey);
   }
 
   void initialize() {
+    hasBegun = false;
     player = AudioCache();
     isDone = false;
     isFailed = false;
@@ -44,43 +46,45 @@ class DeckOfDeathProvider with ChangeNotifier {
 
     displayedCard = deck.first;
     deck.removeAt(0);
-    rest = 15*60;
+    rest = 15 * 60;
     displayedMin = rest ~/ 60;
     displayedSec = rest % 60;
     notifyListeners();
   }
 
   void changeInfiniteMode() {
-    if (isInifinite) {
-      isInifinite = false;
+    if (isInfinite) {
+      isInfinite = false;
     } else {
-      isInifinite = true;
+      isInfinite = true;
     }
     notifyListeners();
   }
 
   void start() {
-    if (!isInifinite) {
+    if (!isInfinite) {
       timer = Timer.periodic(Duration(seconds: 1), (timer) async {
         if (deck.length == 0) {
           await player.play('sounds/oh_yeah.mp3');
           isDone = true;
+          hasBegun = false;
           timer.cancel();
           notifyListeners();
         } else {
           displayedSec = (--rest) % 60;
           displayedMin = rest ~/ 60;
-          notifyListeners();
-          if (rest <1) {
+          if (rest < 1) {
+            hasBegun = false;
             await player.play('sounds/sigh.mp3');
-          }
-          else if (rest % 60 == 0) {
+          } else if (rest % 60 == 0) {
             print("1 minute passed");
           }
-          
+          notifyListeners();
         }
-       });
+      });
     }
+    hasBegun = true;
+    notifyListeners();
   }
 
   void next() {

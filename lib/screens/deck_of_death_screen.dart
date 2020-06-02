@@ -9,13 +9,12 @@ class DeckOfDeathScreen extends StatelessWidget {
       builder: (BuildContext context, DeckOfDeathProvider deck, Widget child) {
         return WillPopScope(
           onWillPop: () {
-            if (!deck.isInifinite) {
+            if (!deck.isInfinite) {
               deck.timer.cancel();
             }
             return Future(() => true);
           },
           child: Material(
-            color: Colors.black,
             child: SafeArea(
               child: deck.isDone
                   ? deck.isFailed
@@ -42,7 +41,7 @@ class DeckOfDeathScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            deck.isInifinite
+                            deck.isInfinite
                                 ? 'No Limit Mode'
                                 : '${deck.displayedMin.toString().padLeft(2, '0')}:${deck.displayedSec.toString().padLeft(2, '0')}',
                             style: TextStyle(

@@ -207,6 +207,7 @@ class PyramidScreen extends StatelessWidget {
                                                           .validate()) {
                                                         pyramid.setHeight(
                                                             int.parse(text));
+                                                        pyramid.initialize();
                                                         await Hive.box(
                                                                 "AppData")
                                                             .put(

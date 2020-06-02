@@ -42,6 +42,7 @@ class JuarezProvider with ChangeNotifier {
 
   void start() {
     hasBegun = true;
+    notifyListeners();
   }
 
   void setHeight(int newHeight) {

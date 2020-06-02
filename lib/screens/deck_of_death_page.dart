@@ -49,7 +49,7 @@ class DeckOfDeathPage extends StatelessWidget {
                           child: Switch(
                             inactiveTrackColor: Colors.grey,
                             activeColor: Colors.greenAccent,
-                              value: death.isInifinite,
+                              value: death.isInfinite,
                               onChanged: (value) {
                                 death.changeInfiniteMode();
                                 Hive.box('AppData').put(kDeckIsInfiniteKey, value);

@@ -207,6 +207,7 @@ class JuarezScreen extends StatelessWidget {
                                                           .validate()) {
                                                         juarez.setHeight(
                                                             int.parse(text));
+                                                        juarez.initialize();
                                                         await Hive.box(
                                                                 "AppData")
                                                             .put(
