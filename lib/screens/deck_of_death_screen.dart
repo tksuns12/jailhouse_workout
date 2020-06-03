@@ -12,30 +12,40 @@ class DeckOfDeathScreen extends StatelessWidget {
       builder: (context, DeckOfDeathProvider deck, child) {
         return WillPopScope(
           child: Material(
-              color: Color(0xffe0e5ec),
-              child: Scaffold(
-                backgroundColor: Color(0xffe0e5ec),
-                appBar: AppBar(
-                  textTheme: TextTheme(
-                      headline6:
-                          TextStyle(color: Colors.blueGrey, fontSize: 20)),
-                  centerTitle: true,
-                  backgroundColor: Color(0xffe0e5ec),
-                  elevation: 0,
-                  title: Text("Deck Of Death"),
-                ),
-                body: SafeArea(
-                    child: deck.isDone
-                        ? deck.isFailed
-                            ? Container(
-                                child: Text("Time is up :(\nTry Next Time!"),
-                              )
-                            : Container(
-                                child: Center(
-                                  child: Text("Well Done!"),
-                                ),
-                              )
-                        : Column(
+            color: Color(0xffe0e5ec),
+            child: SafeArea(
+                child: deck.isDone
+                    ? deck.isFailed
+                        ? Container(
+                            child: Text("Time is up :(\nTry Next Time!"),
+                          )
+                        : Container(
+                            child: Center(
+                              child: Text("Well Done!"),
+                            ),
+                          )
+                    : Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              NeumorphicButton(
+                                  margin: EdgeInsets.all(7),
+                                  boxShape: NeumorphicBoxShape.circle(),
+                                  child: Icon(Icons.arrow_back),
+                                  style: NeumorphicStyle(
+                                      color: Color(0xffe0e5ec), intensity: 0.9),
+                                  onPressed: () => Navigator.of(context).pop()),
+                              Text(
+                                "Deck of Death",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.blueGrey),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.09,
+                          ),
+                          Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               SizedBox(
@@ -43,7 +53,11 @@ class DeckOfDeathScreen extends StatelessWidget {
                                 width: 200,
                                 child: deck.hasBegun
                                     ? deck.isInfinite
-                                        ? Center(child: Text("No Limit Mode", style: TextStyle(fontSize: 20),))
+                                        ? Center(
+                                            child: Text(
+                                            "No Limit Mode",
+                                            style: TextStyle(fontSize: 20),
+                                          ))
                                         : Text(
                                             "${deck.displayedMin.toString().padLeft(2, '0')}:${deck.displayedSec.toString().padLeft(2, '0')}",
                                             style: TextStyle(fontSize: 40),
@@ -53,7 +67,8 @@ class DeckOfDeathScreen extends StatelessWidget {
                                         children: <Widget>[
                                           Text("No Limit Mode"),
                                           Padding(
-                                            padding: const EdgeInsets.only(top: 10),
+                                            padding:
+                                                const EdgeInsets.only(top: 10),
                                             child: NeumorphicSwitch(
                                               style: NeumorphicSwitchStyle(
                                                   activeTrackColor:
@@ -70,9 +85,13 @@ class DeckOfDeathScreen extends StatelessWidget {
                                       ),
                               ),
                               SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.5,
-                                width: MediaQuery.of(context).size.height * 0.5 * 0.69,
-                                child: NeumorphicButton(padding: EdgeInsets.all(1),
+                                height:
+                                    MediaQuery.of(context).size.height * 0.5,
+                                width: MediaQuery.of(context).size.height *
+                                    0.5 *
+                                    0.69,
+                                child: NeumorphicButton(
+                                  padding: EdgeInsets.all(1),
                                   onPressed: () {
                                     if (deck.hasBegun) {
                                       deck.next();
@@ -91,8 +110,10 @@ class DeckOfDeathScreen extends StatelessWidget {
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
-                                  style: NeumorphicStyle(intensity: 0.8,
-                                      color: Color(0xffe0e5ec), depth: 10),
+                                  style: NeumorphicStyle(
+                                      intensity: 0.8,
+                                      color: Color(0xffe0e5ec),
+                                      depth: 10),
                                 ),
                               ),
                               SizedBox(
@@ -109,18 +130,22 @@ class DeckOfDeathScreen extends StatelessWidget {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontSize: 20),
                                       ),
-                                      style: NeumorphicStyle(intensity: 0.8,
-                                          depth: -10, color: Color(0xffe0e5ec)),
+                                      style: NeumorphicStyle(
+                                          intensity: 0.8,
+                                          depth: -10,
+                                          color: Color(0xffe0e5ec)),
                                     )
                                   : SizedBox(
                                       height: 10,
                                     ),
                             ],
-                          )),
-              )),
+                          ),
+                        ],
+                      )),
+          ),
           onWillPop: () {
             if (!deck.isInfinite) {
-              if (deck.hasBegun){
+              if (deck.hasBegun) {
                 deck.timer.cancel();
               }
             }
