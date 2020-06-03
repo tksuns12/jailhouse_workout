@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:jailhouseworkout/prefs.dart';
 import 'package:jailhouseworkout/providers/juarez_provider.dart';
@@ -30,7 +29,10 @@ class JuarezScreen extends StatelessWidget {
                                   boxShape: NeumorphicBoxShape.circle(),
                                   child: Icon(Icons.arrow_back),
                                   style: NeumorphicStyle(color: Color(0xffe0e5ec), intensity: 0.9),
-                                  onPressed: () => Navigator.of(context).pop()),
+                                  onPressed: () {
+                                    if (juarez.isResting) {juarez.timer.cancel();}
+                                    Navigator.of(context).pop();
+                                  }),
                                   Text("Juarez's Valley", style: TextStyle(fontSize: 20, color: Colors.blueGrey),),
                             ],
                           ),
@@ -55,8 +57,6 @@ class JuarezScreen extends StatelessWidget {
                                 width:
                                     MediaQuery.of(context).size.height * 0.41,
                                 child: NeumorphicButton(
-                                  isEnabled:
-                                      (!juarez.hasBegun || !juarez.isResting),
                                   onPressed: () {
                                     if (!juarez.hasBegun) {
                                       juarez.start();
@@ -74,7 +74,7 @@ class JuarezScreen extends StatelessWidget {
                                           ? juarez.isResting
                                               ? NeumorphicShape.concave
                                               : NeumorphicShape.flat
-                                          : NeumorphicShape.convex,
+                                          : NeumorphicShape.flat,
                                       intensity: 1,
                                       lightSource: LightSource.topLeft,
                                       border: NeumorphicBorder(

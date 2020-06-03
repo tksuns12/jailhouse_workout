@@ -30,7 +30,12 @@ class PyramidScreen extends StatelessWidget {
                                   child: Icon(Icons.arrow_back),
                                   style: NeumorphicStyle(
                                       color: Color(0xffe0e5ec), intensity: 0.9),
-                                  onPressed: () => Navigator.of(context).pop()),
+                                  onPressed: () {
+                                    if (pyramid.isResting) {
+                                      pyramid.timer.cancel();
+                                    }
+                                    Navigator.of(context).pop();
+                                  }),
                               Text(
                                 "Pyramid & Reverse Pyramid",
                                 style: TextStyle(

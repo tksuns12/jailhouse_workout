@@ -38,6 +38,7 @@ class JuarezProvider with ChangeNotifier {
     }
     displayedReps = reps.first.toString();
     reps.removeAt(0);
+    notifyListeners();
   }
 
   void start() {
