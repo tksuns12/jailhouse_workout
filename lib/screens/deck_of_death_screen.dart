@@ -39,7 +39,7 @@ class DeckOfDeathScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               SizedBox(
-                                height: 60,
+                                height: 80,
                                 width: 200,
                                 child: deck.hasBegun
                                     ? deck.isInfinite
@@ -52,52 +52,51 @@ class DeckOfDeathScreen extends StatelessWidget {
                                     : Column(
                                         children: <Widget>[
                                           Text("No Limit Mode"),
-                                          NeumorphicSwitch(
-                                            style: NeumorphicSwitchStyle(
-                                                activeTrackColor:
-                                                    Colors.blueGrey),
-                                            value: deck.isInfinite,
-                                            onChanged: (value) {
-                                              deck.changeInfiniteMode();
-                                              Hive.box('AppData').put(
-                                                  kDeckIsInfiniteKey, value);
-                                            },
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 10),
+                                            child: NeumorphicSwitch(
+                                              style: NeumorphicSwitchStyle(
+                                                  activeTrackColor:
+                                                      Colors.blueGrey),
+                                              value: deck.isInfinite,
+                                              onChanged: (value) {
+                                                deck.changeInfiniteMode();
+                                                Hive.box('AppData').put(
+                                                    kDeckIsInfiniteKey, value);
+                                              },
+                                            ),
                                           ),
                                         ],
                                       ),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 30, bottom: 20),
-                                child: SizedBox(
-                                  height: MediaQuery.of(context).size.height * 0.5,
-                                  width: MediaQuery.of(context).size.height * 0.5 * 0.69,
-                                  child: NeumorphicButton(padding: EdgeInsets.zero,
-                                    onPressed: () {
-                                      if (deck.hasBegun) {
-                                        deck.next();
-                                      } else {
-                                        deck.start();
-                                      }
-                                    },
-                                    child: deck.hasBegun
-                                        ? Image.asset(
-                                            deck.displayedCard.imagePath)
-                                        : Center(
-                                            child: Text(
-                                              "CLICK\nto SHUFFLE",
-                                              style: TextStyle(fontSize: 40),
-                                              key: ValueKey(2),
-                                              textAlign: TextAlign.center,
-                                            ),
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height * 0.5,
+                                width: MediaQuery.of(context).size.height * 0.5 * 0.69,
+                                child: NeumorphicButton(padding: EdgeInsets.all(1),
+                                  onPressed: () {
+                                    if (deck.hasBegun) {
+                                      deck.next();
+                                    } else {
+                                      deck.start();
+                                    }
+                                  },
+                                  child: deck.hasBegun
+                                      ? Image.asset(
+                                          deck.displayedCard.imagePath)
+                                      : Center(
+                                          child: Text(
+                                            "SHUFFLE!",
+                                            style: TextStyle(fontSize: 40),
+                                            key: ValueKey(2),
+                                            textAlign: TextAlign.center,
                                           ),
-                                    style: NeumorphicStyle(intensity: 0.8,
-                                        color: Color(0xffe0e5ec), depth: 10),
-                                  ),
+                                        ),
+                                  style: NeumorphicStyle(intensity: 0.8,
+                                      color: Color(0xffe0e5ec), depth: 10),
                                 ),
                               ),
                               SizedBox(
-                                height: 10,
+                                height: 30,
                                 width: double.infinity,
                               ),
                               deck.hasBegun
@@ -110,11 +109,11 @@ class DeckOfDeathScreen extends StatelessWidget {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontSize: 20),
                                       ),
-                                      style: NeumorphicStyle(
+                                      style: NeumorphicStyle(intensity: 0.8,
                                           depth: -10, color: Color(0xffe0e5ec)),
                                     )
                                   : SizedBox(
-                                      height: 30,
+                                      height: 10,
                                     ),
                             ],
                           )),
