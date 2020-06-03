@@ -5,6 +5,7 @@ import 'package:jailhouseworkout/providers/juarez_provider.dart';
 import 'package:jailhouseworkout/providers/pyramid.provider.dart';
 import 'package:jailhouseworkout/screens/jurarez_screen.dart';
 import 'package:jailhouseworkout/screens/pyramid_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'deck_of_death_screen.dart';
 
@@ -21,9 +22,13 @@ class MainScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 NeumorphicButton(
-                  onPressed: () {
-                    juarez.initialize();
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> JuarezScreen()));
+                  onPressed: () async {
+                    var result = await Permission.storage.request();
+                    if (result.isGranted) {
+                      juarez.initialize();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => JuarezScreen()));
+                    }
                   },
                   margin: EdgeInsets.all(20),
                   child: Text(
@@ -33,17 +38,20 @@ class MainScreen extends StatelessWidget {
                   boxShape:
                       NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
                   style: NeumorphicStyle(
-                    intensity: 0.8,
+                      intensity: 0.8,
                       shape: NeumorphicShape.flat,
                       color: Color(0xFFe0e5ec),
                       depth: 10,
                       lightSource: LightSource.topLeft),
                 ),
                 NeumorphicButton(
-                  onPressed: () {
-                    pyramid.initialize();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => PyramidScreen()));
+                  onPressed: () async {
+                    var result = await Permission.storage.request();
+                    if (result.isGranted) {
+                      pyramid.initialize();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PyramidScreen()));
+                    }
                   },
                   margin: EdgeInsets.all(20),
                   child: Text(
@@ -54,16 +62,20 @@ class MainScreen extends StatelessWidget {
                   boxShape:
                       NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
                   style: NeumorphicStyle(
-                    intensity: 0.8,
+                      intensity: 0.8,
                       shape: NeumorphicShape.flat,
                       color: Color(0xFFe0e5ec),
                       depth: 10,
                       lightSource: LightSource.topLeft),
                 ),
                 NeumorphicButton(
-                  onPressed: () {
-                    deck.initialize();
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> DeckOfDeathScreen()));
+                  onPressed: () async {
+                    var result = await Permission.storage.request();
+                    if (result.isGranted) {
+                      deck.initialize();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => DeckOfDeathScreen()));
+                    }
                   },
                   margin: EdgeInsets.all(20),
                   child: Text(
@@ -73,7 +85,7 @@ class MainScreen extends StatelessWidget {
                   boxShape:
                       NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
                   style: NeumorphicStyle(
-                    intensity: 0.8,
+                      intensity: 0.8,
                       shape: NeumorphicShape.flat,
                       color: Color(0xFFe0e5ec),
                       depth: 10,
