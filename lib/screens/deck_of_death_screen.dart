@@ -43,7 +43,7 @@ class DeckOfDeathScreen extends StatelessWidget {
                                 width: 200,
                                 child: deck.hasBegun
                                     ? deck.isInfinite
-                                        ? Text("No Limit Mode")
+                                        ? Center(child: Text("No Limit Mode", style: TextStyle(fontSize: 20),))
                                         : Text(
                                             "${deck.displayedMin.toString().padLeft(2, '0')}:${deck.displayedSec.toString().padLeft(2, '0')}",
                                             style: TextStyle(fontSize: 40),
@@ -70,9 +70,9 @@ class DeckOfDeathScreen extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.only(top: 30, bottom: 20),
                                 child: SizedBox(
-                                  height: 363,
-                                  width: 250,
-                                  child: NeumorphicButton(
+                                  height: MediaQuery.of(context).size.height * 0.5,
+                                  width: MediaQuery.of(context).size.height * 0.5 * 0.69,
+                                  child: NeumorphicButton(padding: EdgeInsets.zero,
                                     onPressed: () {
                                       if (deck.hasBegun) {
                                         deck.next();
@@ -91,7 +91,7 @@ class DeckOfDeathScreen extends StatelessWidget {
                                               textAlign: TextAlign.center,
                                             ),
                                           ),
-                                    style: NeumorphicStyle(
+                                    style: NeumorphicStyle(intensity: 0.8,
                                         color: Color(0xffe0e5ec), depth: 10),
                                   ),
                                 ),

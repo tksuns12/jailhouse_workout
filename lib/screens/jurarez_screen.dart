@@ -35,8 +35,17 @@ class JuarezScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           SizedBox(
-                            height: 300,
-                            width: 350,
+                            height: MediaQuery.of(context).size.height * 0.05,
+                            child: juarez.isResting
+                                ? Center(
+                                    child: Text(
+                                        "Next Rep: ${juarez.reps[0]}\nSets Left: ${juarez.reps.length}"),
+                                  )
+                                : SizedBox(),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.41,
+                            width: MediaQuery.of(context).size.height * 0.41,
                             child: NeumorphicButton(
                               isEnabled:
                                   (!juarez.hasBegun || !juarez.isResting),

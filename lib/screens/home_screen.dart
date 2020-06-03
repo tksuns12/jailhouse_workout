@@ -17,7 +17,7 @@ class MainScreen extends StatelessWidget {
           PyramidProvider pyramid, DeckOfDeathProvider deck, Widget child) {
         return Material(
           color: Color(0xFFe0e5ec),
-          child: Container(
+          child: SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -31,9 +31,14 @@ class MainScreen extends StatelessWidget {
                     }
                   },
                   margin: EdgeInsets.all(20),
-                  child: Text(
-                    "Juarez's Valley",
-                    style: TextStyle(fontSize: 30),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: Center(
+                      child: Text(
+                        "Juarez's Valley",
+                        style: TextStyle(fontSize: 30),
+                      ),
+                    ),
                   ),
                   boxShape:
                       NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
@@ -54,10 +59,15 @@ class MainScreen extends StatelessWidget {
                     }
                   },
                   margin: EdgeInsets.all(20),
-                  child: Text(
-                    "Pyramid\n&\nReverse Pyramid",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: Center(
+                      child: Text(
+                        "Pyramid\n&\nReverse Pyramid",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 30),
+                      ),
+                    ),
                   ),
                   boxShape:
                       NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
@@ -78,9 +88,14 @@ class MainScreen extends StatelessWidget {
                     }
                   },
                   margin: EdgeInsets.all(20),
-                  child: Text(
-                    "Deck of Death",
-                    style: TextStyle(fontSize: 30),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: Center(
+                      child: Text(
+                        "Deck of Death",
+                        style: TextStyle(fontSize: 30),
+                      ),
+                    ),
                   ),
                   boxShape:
                       NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),

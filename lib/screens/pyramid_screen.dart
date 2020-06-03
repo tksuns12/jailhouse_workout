@@ -35,8 +35,16 @@ class PyramidScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           SizedBox(
-                            height: 300,
-                            width: 350,
+                            height: MediaQuery.of(context).size.height * 0.05,
+                            child: pyramid.isResting
+                                ? Center(
+                                    child: Text(
+                                        "Next Rep: ${pyramid.reps[0]}\nSets Left: ${pyramid.reps.length}"))
+                                : SizedBox(),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.41,
+                            width: MediaQuery.of(context).size.height * 0.41,
                             child: NeumorphicButton(
                               isEnabled:
                                   (!pyramid.hasBegun || !pyramid.isResting),
@@ -108,9 +116,6 @@ class PyramidScreen extends StatelessWidget {
                                 depth: -10,
                                 color: Color(0xFFe0e5ec),
                                 intensity: 1),
-                          ),
-                          SizedBox(
-                            height: 10,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,

@@ -59,9 +59,9 @@ class PyramidProvider with ChangeNotifier {
       isResting = false;
       notifyListeners();
     } else {
-      isResting = true;
       int restsec = rest.first;
       rest.removeAt(0);
+      isResting = true;
 
       timer = Timer.periodic(Duration(seconds: 1), (timer) async {
         if (restsec >= 1) {
