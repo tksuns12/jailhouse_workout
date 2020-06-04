@@ -18,6 +18,8 @@ class JuarezProvider with ChangeNotifier {
   Timer timer;
   AudioCache player;
   bool hasBegun = false;
+  bool paused;
+  int pausedTime;
 
   JuarezProvider() {
     player = AudioCache();
@@ -29,6 +31,7 @@ class JuarezProvider with ChangeNotifier {
     hasBegun = false;
     isDone = false;
     isResting = false;
+    paused = false;
     reps.clear();
     for (int i = _height; i > 0; --i) {
       this.reps.add(i);
@@ -60,31 +63,45 @@ class JuarezProvider with ChangeNotifier {
     }
   }
 
-  void next() {
+  void onClickRepFinished() {
     if (reps.length == 0) {
       isDone = true;
       isResting = false;
       notifyListeners();
     } else {
       isResting = true;
-      int restsec = this.rest;
-
-      timer = Timer.periodic(Duration(seconds: 1), (timer) async {
-        if (restsec >= 1) {
-          displayedRestingTime = (restsec--).toString();
-          if (restsec < 5) {
-            await player.play('sounds/short_beep.mp3');
-          }
-        } else {
-          displayedReps = reps.first.toString();
-          reps.removeAt(0);
-          await player.play('sounds/long_beep.mp3');
-          isResting = false;
-          timer.cancel();
-        }
-        notifyListeners();
-      });
+      setTimer(rest);
     }
+  }
+
+  void onClickPause() {
+    timer.cancel();
+    pausedTime =  int.parse(displayedRestingTime);
+    paused = true;
+    notifyListeners();
+  }
+
+  void onClickResume() {
+    paused = false;
+    setTimer(pausedTime);
+  }
+
+  void setTimer(int restTime) {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+      if (restTime >= 1) {
+        displayedRestingTime = (restTime--).toString();
+        if (restTime < 5) {
+          await player.play('sounds/short_beep.mp3');
+        }
+      } else {
+        displayedReps = reps.first.toString();
+        reps.removeAt(0);
+        await player.play('sounds/long_beep.mp3');
+        isResting = false;
+        timer.cancel();
+      }
+      notifyListeners();
+    });
   }
 
   Future<void> onRestFinished() async {

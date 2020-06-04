@@ -43,7 +43,9 @@ class PyramidScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: MediaQuery.of(context).size.height*0.07,),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.07,
+                          ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,13 +65,17 @@ class PyramidScreen extends StatelessWidget {
                                 width:
                                     MediaQuery.of(context).size.height * 0.41,
                                 child: NeumorphicButton(
-                                  isEnabled:
-                                      (!pyramid.hasBegun || !pyramid.isResting),
                                   onPressed: () {
                                     if (!pyramid.hasBegun) {
                                       pyramid.start();
                                     } else if (!pyramid.isResting) {
-                                      pyramid.next();
+                                      pyramid.onClickRepFinished();
+                                    } else if (pyramid.isResting &&
+                                        !pyramid.paused) {
+                                      pyramid.onClickPause();
+                                    } else if (pyramid.isResting &&
+                                        pyramid.paused) {
+                                      pyramid.onClickResume();
                                     }
                                   },
                                   margin: EdgeInsets.all(20),
