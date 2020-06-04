@@ -27,7 +27,8 @@ class DeckOfDeathScreen extends StatelessWidget {
                           )
                     : Column(
                         children: <Widget>[
-                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               NeumorphicButton(
                                   margin: EdgeInsets.all(7),
@@ -35,13 +36,18 @@ class DeckOfDeathScreen extends StatelessWidget {
                                   child: Icon(Icons.arrow_back),
                                   style: NeumorphicStyle(
                                       color: kMainColor, intensity: 0.9),
-                                  onPressed: () => Navigator.of(context).pop()),
+                                  onPressed: () {
+                                    deck.timer.cancel();
+                                    Navigator.of(context).pop();
+                                  }),
                               Text(
                                 "Deck of Death",
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.blueGrey),
                               ),
-                              SizedBox(width: 25,)
+                              SizedBox(
+                                width: 25,
+                              )
                             ],
                           ),
                           SizedBox(
@@ -93,30 +99,34 @@ class DeckOfDeathScreen extends StatelessWidget {
                                     0.5 *
                                     0.69,
                                 child: NeumorphicButton(
-                                  padding: EdgeInsets.all(1),
-                                  onPressed: () {
-                                    if (deck.hasBegun) {
-                                      deck.next();
-                                    } else {
-                                      deck.start();
-                                    }
-                                  },
-                                  child: deck.hasBegun
-                                      ? Image.asset(
-                                          deck.displayedCard.imagePath)
-                                      : Center(
-                                          child: Text(
-                                            "SHUFFLE!",
-                                            style: TextStyle(fontSize: 40),
-                                            key: ValueKey(2),
-                                            textAlign: TextAlign.center,
+                                    boxShape: deck.hasBegun
+                                        ? NeumorphicBoxShape.roundRect(
+                                            BorderRadius.circular(10))
+                                        : NeumorphicBoxShape.circle(),
+                                    padding: EdgeInsets.all(1),
+                                    onPressed: () {
+                                      if (deck.hasBegun) {
+                                        deck.next();
+                                      } else {
+                                        deck.start();
+                                      }
+                                    },
+                                    child: deck.hasBegun
+                                        ? Image.asset(
+                                            deck.displayedCard.imagePath)
+                                        : Center(
+                                            child: Text(
+                                              "SHUFFLE!",
+                                              style: TextStyle(fontSize: 40),
+                                              key: ValueKey(2),
+                                              textAlign: TextAlign.center,
+                                            ),
                                           ),
-                                        ),
-                                  style: NeumorphicStyle(
-                                      intensity: 0.8,
-                                      color: kMainColor,
-                                      depth: 10),
-                                ),
+                                    style: NeumorphicStyle(
+                                        intensity: 0.8,
+                                        color: kMainColor,
+                                        depth: 10),
+                                  ),
                               ),
                               SizedBox(
                                 height: 30,
