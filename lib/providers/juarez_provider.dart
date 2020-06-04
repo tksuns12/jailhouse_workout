@@ -33,7 +33,7 @@ class JuarezProvider with ChangeNotifier {
     isResting = false;
     paused = false;
     reps.clear();
-    for (int i = _height; i > 0; --i) {
+    for (int i = _height; i > _height / 2; --i) {
       this.reps.add(i);
       if (i != 1) {
         this.reps.add(_height - i + 1);
