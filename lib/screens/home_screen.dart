@@ -27,40 +27,7 @@ class _MainScreenState extends State<MainScreen> {
         return Scaffold(
           key: scaffoldKey,
           backgroundColor: kMainColor,
-          appBar: AppBar(
-            centerTitle: true,
-            title: NeumorphicText(
-              "Jailhouse",
-              textStyle: NeumorphicTextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ),
-              style: NeumorphicStyle(
-                color: kMainColor,
-                depth: 1.5,
-                intensity: 1,
-                lightSource: LightSource.topLeft,
-              ),
-            ),
-            backgroundColor: kMainColor,
-            actions: <Widget>[
-              NeumorphicButton(
-                onPressed: () {
-                  scaffoldKey.currentState.openEndDrawer();
-                },
-                margin: EdgeInsets.all(5),
-                boxShape: NeumorphicBoxShape.circle(),
-                child: Icon(
-                  FontAwesomeIcons.bars,
-                  color: Colors.black,
-                ),
-                style:
-                    NeumorphicStyle(color: kMainColor, intensity: 0.9),
-              )
-            ],
-            elevation: 0,
-          ),
-          endDrawer: Drawer(
+          drawer: Drawer(
             child: ListView(
               children: <Widget>[
                 NeumorphicButton(
@@ -86,96 +53,115 @@ class _MainScreenState extends State<MainScreen> {
               ],
             ),
           ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              NeumorphicButton(
-                onPressed: () async {
-                  var result = await Permission.storage.request();
-                  if (result.isGranted) {
-                    juarez.initialize();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => JuarezScreen()));
-                  }
-                },
-                margin: EdgeInsets.all(20),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: Center(
-                    child: Text(
-                      "Juarez's Valley",
-                      style: TextStyle(fontSize: 30),
+          body: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    NeumorphicButton(
+                      onPressed: () {
+                        scaffoldKey.currentState.openDrawer();
+                      },
+                      margin: EdgeInsets.all(5),
+                      boxShape: NeumorphicBoxShape.circle(),
+                      child: Icon(
+                        FontAwesomeIcons.bars,
+                        color: Colors.black,
+                      ),
+                      style: NeumorphicStyle(color: kMainColor, intensity: 0.9),
+                    )
+                  ],
+                ),
+                Spacer(),
+                NeumorphicButton(
+                  onPressed: () async {
+                    var result = await Permission.storage.request();
+                    if (result.isGranted) {
+                      juarez.initialize();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => JuarezScreen()));
+                    }
+                  },
+                  margin: EdgeInsets.all(20),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: Center(
+                      child: Text(
+                        "Juarez's Valley",
+                        style: TextStyle(fontSize: 30),
+                      ),
                     ),
                   ),
+                  boxShape:
+                      NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
+                  style: NeumorphicStyle(
+                      intensity: 0.8,
+                      shape: NeumorphicShape.flat,
+                      color: kMainColor,
+                      depth: 10,
+                      lightSource: LightSource.topLeft),
                 ),
-                boxShape:
-                    NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
-                style: NeumorphicStyle(
-                    intensity: 0.8,
-                    shape: NeumorphicShape.flat,
-                    color: kMainColor,
-                    depth: 10,
-                    lightSource: LightSource.topLeft),
-              ),
-              NeumorphicButton(
-                onPressed: () async {
-                  var result = await Permission.storage.request();
-                  if (result.isGranted) {
-                    pyramid.initialize();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => PyramidScreen()));
-                  }
-                },
-                margin: EdgeInsets.all(20),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: Center(
-                    child: Text(
-                      "Pyramid\n&\nReverse Pyramid",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 30),
+                NeumorphicButton(
+                  onPressed: () async {
+                    var result = await Permission.storage.request();
+                    if (result.isGranted) {
+                      pyramid.initialize();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PyramidScreen()));
+                    }
+                  },
+                  margin: EdgeInsets.all(20),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: Center(
+                      child: Text(
+                        "Pyramid\n&\nReverse Pyramid",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 30),
+                      ),
                     ),
                   ),
+                  boxShape:
+                      NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
+                  style: NeumorphicStyle(
+                      intensity: 0.8,
+                      shape: NeumorphicShape.flat,
+                      color: kMainColor,
+                      depth: 10,
+                      lightSource: LightSource.topLeft),
                 ),
-                boxShape:
-                    NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
-                style: NeumorphicStyle(
-                    intensity: 0.8,
-                    shape: NeumorphicShape.flat,
-                    color: kMainColor,
-                    depth: 10,
-                    lightSource: LightSource.topLeft),
-              ),
-              NeumorphicButton(
-                onPressed: () async {
-                  var result = await Permission.storage.request();
-                  if (result.isGranted) {
-                    deck.initialize();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => DeckOfDeathScreen()));
-                  }
-                },
-                margin: EdgeInsets.all(20),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: Center(
-                    child: Text(
-                      "Deck of Death",
-                      style: TextStyle(fontSize: 30),
+                NeumorphicButton(
+                  onPressed: () async {
+                    var result = await Permission.storage.request();
+                    if (result.isGranted) {
+                      deck.initialize();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => DeckOfDeathScreen()));
+                    }
+                  },
+                  margin: EdgeInsets.all(20),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: Center(
+                      child: Text(
+                        "Deck of Death",
+                        style: TextStyle(fontSize: 30),
+                      ),
                     ),
                   ),
+                  boxShape:
+                      NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
+                  style: NeumorphicStyle(
+                      intensity: 0.8,
+                      shape: NeumorphicShape.flat,
+                      color: kMainColor,
+                      depth: 10,
+                      lightSource: LightSource.topLeft),
                 ),
-                boxShape:
-                    NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
-                style: NeumorphicStyle(
-                    intensity: 0.8,
-                    shape: NeumorphicShape.flat,
-                    color: kMainColor,
-                    depth: 10,
-                    lightSource: LightSource.topLeft),
-              ),
-            ],
+                Spacer(),
+              ],
+            ),
           ),
         );
       },
