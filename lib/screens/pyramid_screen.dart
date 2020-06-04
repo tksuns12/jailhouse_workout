@@ -146,16 +146,8 @@ class PyramidScreen extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Neumorphic(
-                                    boxShape: NeumorphicBoxShape.roundRect(
-                                        BorderRadius.circular(10)),
+                                  Container(
                                     padding: EdgeInsets.all(15),
-                                    style: NeumorphicStyle(
-                                        intensity: 0.8,
-                                        border: NeumorphicBorder(
-                                            color: Colors.white, width: 2.5),
-                                        color: kMainColor,
-                                        depth: -30),
                                     child: Column(
                                       children: <Widget>[
                                         Text(
@@ -290,16 +282,8 @@ class PyramidScreen extends StatelessWidget {
                                   SizedBox(
                                     width: 20,
                                   ),
-                                  Neumorphic(
-                                    boxShape: NeumorphicBoxShape.roundRect(
-                                        BorderRadius.circular(10)),
+                                  Container(
                                     padding: EdgeInsets.all(15),
-                                    style: NeumorphicStyle(
-                                        intensity: 0.8,
-                                        border: NeumorphicBorder(
-                                            color: Colors.white, width: 2.5),
-                                        color: kMainColor,
-                                        depth: -30),
                                     child: Column(
                                       children: <Widget>[
                                         Text(

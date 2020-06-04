@@ -305,8 +305,9 @@ class JuarezScreen extends StatelessWidget {
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              "REST per REP",
+                                              "REST",
                                               style: TextStyle(fontSize: 15),
+                                              textAlign: TextAlign.center,
                                             ),
                                             NeumorphicButton(
                                               isEnabled: !juarez.hasBegun,
