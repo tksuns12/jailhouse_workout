@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:hive/hive.dart';
+import 'package:jailhouseworkout/consts.dart';
 import 'package:jailhouseworkout/prefs.dart';
 import 'package:jailhouseworkout/providers/pyramid.provider.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ class PyramidScreen extends StatelessWidget {
       builder: (BuildContext context, PyramidProvider pyramid, Widget child) {
         return WillPopScope(
             child: Material(
-              color: Color(0xFFe0e5ec),
+              color: kMainColor,
               child: pyramid.isDone
                   ? Container(
                       child: Center(
@@ -29,7 +30,7 @@ class PyramidScreen extends StatelessWidget {
                                   boxShape: NeumorphicBoxShape.circle(),
                                   child: Icon(Icons.arrow_back),
                                   style: NeumorphicStyle(
-                                      color: Color(0xffe0e5ec), intensity: 0.9),
+                                      color: kMainColor, intensity: 0.9),
                                   onPressed: () {
                                     if (pyramid.isResting) {
                                       pyramid.timer.cancel();
@@ -94,7 +95,7 @@ class PyramidScreen extends StatelessWidget {
                                       border: NeumorphicBorder(
                                           color: Colors.white, width: 3.5),
                                       depth: pyramid.isResting ? -10 : 10,
-                                      color: Color(0xFFe0e5ec)),
+                                      color: kMainColor),
                                   child: AnimatedSwitcher(
                                     transitionBuilder: (child, animation) {
                                       return SlideTransition(
@@ -137,7 +138,7 @@ class PyramidScreen extends StatelessWidget {
                                 child: Text("Configuration"),
                                 style: NeumorphicStyle(
                                     depth: -10,
-                                    color: Color(0xFFe0e5ec),
+                                    color: kMainColor,
                                     intensity: 1),
                               ),
                               Row(
@@ -151,7 +152,7 @@ class PyramidScreen extends StatelessWidget {
                                         intensity: 0.8,
                                         border: NeumorphicBorder(
                                             color: Colors.white, width: 2.5),
-                                        color: Color(0xFFe0e5ec),
+                                        color: kMainColor,
                                         depth: -30),
                                     child: Column(
                                       children: <Widget>[
@@ -221,12 +222,12 @@ class PyramidScreen extends StatelessWidget {
                                                     ),
                                                     style: NeumorphicStyle(
                                                         color:
-                                                            Color(0xFFe0e5ec),
+                                                            kMainColor,
                                                         depth: -10,
                                                         intensity: 1),
                                                   ),
                                                   backgroundColor:
-                                                      Color(0xFFe0e5ec),
+                                                      kMainColor,
                                                   actions: <Widget>[
                                                     NeumorphicButton(
                                                         style: NeumorphicStyle(
@@ -277,7 +278,7 @@ class PyramidScreen extends StatelessWidget {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 30),
                                           style: NeumorphicStyle(
-                                              color: Color(0xFFe0e5ec)),
+                                              color: kMainColor),
                                           child: Text(
                                             "${pyramid.height}",
                                             style: TextStyle(fontSize: 30),
@@ -297,7 +298,7 @@ class PyramidScreen extends StatelessWidget {
                                         intensity: 0.8,
                                         border: NeumorphicBorder(
                                             color: Colors.white, width: 2.5),
-                                        color: Color(0xFFe0e5ec),
+                                        color: kMainColor,
                                         depth: -30),
                                     child: Column(
                                       children: <Widget>[
@@ -367,12 +368,12 @@ class PyramidScreen extends StatelessWidget {
                                                     ),
                                                     style: NeumorphicStyle(
                                                         color:
-                                                            Color(0xFFe0e5ec),
+                                                            kMainColor,
                                                         depth: -10,
                                                         intensity: 1),
                                                   ),
                                                   backgroundColor:
-                                                      Color(0xFFe0e5ec),
+                                                      kMainColor,
                                                   actions: <Widget>[
                                                     NeumorphicButton(
                                                         style: NeumorphicStyle(
@@ -422,7 +423,7 @@ class PyramidScreen extends StatelessWidget {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 30),
                                           style: NeumorphicStyle(
-                                              color: Color(0xFFe0e5ec)),
+                                              color: kMainColor),
                                           child: Text(
                                             "${pyramid.restWeight}",
                                             style: TextStyle(fontSize: 30),

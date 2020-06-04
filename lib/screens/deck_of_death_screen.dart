@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:hive/hive.dart';
+import 'package:jailhouseworkout/consts.dart';
 import 'package:jailhouseworkout/prefs.dart';
 import 'package:jailhouseworkout/providers/deck_of_death_provider.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ class DeckOfDeathScreen extends StatelessWidget {
       builder: (context, DeckOfDeathProvider deck, child) {
         return WillPopScope(
           child: Material(
-            color: Color(0xffe0e5ec),
+            color: kMainColor,
             child: SafeArea(
                 child: deck.isDone
                     ? deck.isFailed
@@ -33,7 +34,7 @@ class DeckOfDeathScreen extends StatelessWidget {
                                   boxShape: NeumorphicBoxShape.circle(),
                                   child: Icon(Icons.arrow_back),
                                   style: NeumorphicStyle(
-                                      color: Color(0xffe0e5ec), intensity: 0.9),
+                                      color: kMainColor, intensity: 0.9),
                                   onPressed: () => Navigator.of(context).pop()),
                               Text(
                                 "Deck of Death",
@@ -112,7 +113,7 @@ class DeckOfDeathScreen extends StatelessWidget {
                                         ),
                                   style: NeumorphicStyle(
                                       intensity: 0.8,
-                                      color: Color(0xffe0e5ec),
+                                      color: kMainColor,
                                       depth: 10),
                                 ),
                               ),
@@ -133,7 +134,7 @@ class DeckOfDeathScreen extends StatelessWidget {
                                       style: NeumorphicStyle(
                                           intensity: 0.8,
                                           depth: -10,
-                                          color: Color(0xffe0e5ec)),
+                                          color: kMainColor),
                                     )
                                   : SizedBox(
                                       height: 10,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:jailhouseworkout/consts.dart';
 import 'package:jailhouseworkout/providers/deck_of_death_provider.dart';
 import 'package:jailhouseworkout/providers/juarez_provider.dart';
 import 'package:jailhouseworkout/providers/pyramid.provider.dart';
@@ -25,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
           PyramidProvider pyramid, DeckOfDeathProvider deck, Widget child) {
         return Scaffold(
           key: scaffoldKey,
-          backgroundColor: Color(0xFFe0e5ec),
+          backgroundColor: kMainColor,
           appBar: AppBar(
             centerTitle: true,
             title: NeumorphicText(
@@ -35,13 +36,13 @@ class _MainScreenState extends State<MainScreen> {
                 fontWeight: FontWeight.bold,
               ),
               style: NeumorphicStyle(
-                color: Color(0xffe0e5ec),
+                color: kMainColor,
                 depth: 1.5,
                 intensity: 1,
                 lightSource: LightSource.topLeft,
               ),
             ),
-            backgroundColor: Color(0xFFe0e5ec),
+            backgroundColor: kMainColor,
             actions: <Widget>[
               NeumorphicButton(
                 onPressed: () {
@@ -54,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
                   color: Colors.black,
                 ),
                 style:
-                    NeumorphicStyle(color: Color(0xFFe0e5ec), intensity: 0.9),
+                    NeumorphicStyle(color: kMainColor, intensity: 0.9),
               )
             ],
             elevation: 0,
@@ -113,7 +114,7 @@ class _MainScreenState extends State<MainScreen> {
                 style: NeumorphicStyle(
                     intensity: 0.8,
                     shape: NeumorphicShape.flat,
-                    color: Color(0xFFe0e5ec),
+                    color: kMainColor,
                     depth: 10,
                     lightSource: LightSource.topLeft),
               ),
@@ -142,7 +143,7 @@ class _MainScreenState extends State<MainScreen> {
                 style: NeumorphicStyle(
                     intensity: 0.8,
                     shape: NeumorphicShape.flat,
-                    color: Color(0xFFe0e5ec),
+                    color: kMainColor,
                     depth: 10,
                     lightSource: LightSource.topLeft),
               ),
@@ -170,7 +171,7 @@ class _MainScreenState extends State<MainScreen> {
                 style: NeumorphicStyle(
                     intensity: 0.8,
                     shape: NeumorphicShape.flat,
-                    color: Color(0xFFe0e5ec),
+                    color: kMainColor,
                     depth: 10,
                     lightSource: LightSource.topLeft),
               ),

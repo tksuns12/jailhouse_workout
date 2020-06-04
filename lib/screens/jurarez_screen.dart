@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:hive/hive.dart';
+import 'package:jailhouseworkout/consts.dart';
 import 'package:jailhouseworkout/prefs.dart';
 import 'package:jailhouseworkout/providers/juarez_provider.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ class JuarezScreen extends StatelessWidget {
       builder: (BuildContext context, JuarezProvider juarez, Widget child) {
         return WillPopScope(
             child: Material(
-              color: Color(0xFFe0e5ec),
+              color: kMainColor,
               child: juarez.isDone
                   ? Container(
                       child: Center(
@@ -29,7 +30,7 @@ class JuarezScreen extends StatelessWidget {
                                   boxShape: NeumorphicBoxShape.circle(),
                                   child: Icon(Icons.arrow_back),
                                   style: NeumorphicStyle(
-                                      color: Color(0xffe0e5ec), intensity: 0.9),
+                                      color: kMainColor, intensity: 0.9),
                                   onPressed: () {
                                     if (juarez.isResting) {
                                       juarez.timer.cancel();
@@ -93,7 +94,7 @@ class JuarezScreen extends StatelessWidget {
                                       border: NeumorphicBorder(
                                           color: Colors.white, width: 3.5),
                                       depth: juarez.isResting ? -10 : 10,
-                                      color: Color(0xFFe0e5ec)),
+                                      color: kMainColor),
                                   child: AnimatedSwitcher(
                                     transitionBuilder: (child, animation) {
                                       return SlideTransition(
@@ -135,7 +136,7 @@ class JuarezScreen extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width * 0.75,
                                 child: Neumorphic(boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(5)),
                                   style:
-                                      NeumorphicStyle(color: Color(0xFFe0e5ec), shape: NeumorphicShape.concave, depth: 10, intensity: 0.85, surfaceIntensity: 0.4),
+                                      NeumorphicStyle(color: kMainColor, shape: NeumorphicShape.concave, depth: 10, intensity: 0.85, surfaceIntensity: 0.4),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
@@ -222,7 +223,7 @@ class JuarezScreen extends StatelessWidget {
                                                             intensity: 1),
                                                       ),
                                                       backgroundColor:
-                                                          Color(0xFFe0e5ec),
+                                                          kMainColor,
                                                       actions: <Widget>[
                                                         NeumorphicButton(
                                                             style: NeumorphicStyle(
@@ -277,7 +278,7 @@ class JuarezScreen extends StatelessWidget {
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 30),
                                               style: NeumorphicStyle(
-                                                  color: Color(0xFFe0e5ec)),
+                                                  color: kMainColor),
                                               child: Text(
                                                 "${juarez.height}",
                                                 style: TextStyle(fontSize: 30),
@@ -372,7 +373,7 @@ class JuarezScreen extends StatelessWidget {
                                                             intensity: 1),
                                                       ),
                                                       backgroundColor:
-                                                          Color(0xFFe0e5ec),
+                                                          kMainColor,
                                                       actions: <Widget>[
                                                         NeumorphicButton(
                                                             style: NeumorphicStyle(
@@ -425,7 +426,7 @@ class JuarezScreen extends StatelessWidget {
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 30),
                                               style: NeumorphicStyle(
-                                                  color: Color(0xFFe0e5ec)),
+                                                  color: kMainColor),
                                               child: Text(
                                                 "${juarez.rest}",
                                                 style: TextStyle(fontSize: 30),

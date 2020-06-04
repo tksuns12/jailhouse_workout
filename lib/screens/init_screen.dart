@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:wakelock/wakelock.dart';
 
+import '../consts.dart';
 import '../prefs.dart';
 import 'home_screen.dart';
 
@@ -37,6 +38,6 @@ class _InitialScreenState extends State<InitialScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Color(0xFFe0e5ec));
+    return Container(color: kMainColor);
   }
 }
