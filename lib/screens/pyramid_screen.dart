@@ -126,6 +126,8 @@ class PyramidScreen extends StatelessWidget {
                                             style: TextStyle(fontSize: 50),
                                             key: ValueKey(2),
                                             textAlign: TextAlign.center,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.clip,
                                           ),
                                   ),
                                 ),
@@ -221,13 +223,11 @@ class PyramidScreen extends StatelessWidget {
                                                       ),
                                                     ),
                                                     style: NeumorphicStyle(
-                                                        color:
-                                                            kMainColor,
+                                                        color: kMainColor,
                                                         depth: -10,
                                                         intensity: 1),
                                                   ),
-                                                  backgroundColor:
-                                                      kMainColor,
+                                                  backgroundColor: kMainColor,
                                                   actions: <Widget>[
                                                     NeumorphicButton(
                                                         style: NeumorphicStyle(
@@ -367,13 +367,11 @@ class PyramidScreen extends StatelessWidget {
                                                       ),
                                                     ),
                                                     style: NeumorphicStyle(
-                                                        color:
-                                                            kMainColor,
+                                                        color: kMainColor,
                                                         depth: -10,
                                                         intensity: 1),
                                                   ),
-                                                  backgroundColor:
-                                                      kMainColor,
+                                                  backgroundColor: kMainColor,
                                                   actions: <Widget>[
                                                     NeumorphicButton(
                                                         style: NeumorphicStyle(

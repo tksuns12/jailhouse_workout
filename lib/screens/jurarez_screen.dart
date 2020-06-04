@@ -72,9 +72,11 @@ class JuarezScreen extends StatelessWidget {
                                       juarez.start();
                                     } else if (!juarez.isResting) {
                                       juarez.onClickRepFinished();
-                                    } else if (juarez.isResting && !juarez.paused) {
+                                    } else if (juarez.isResting &&
+                                        !juarez.paused) {
                                       juarez.onClickPause();
-                                    } else if (juarez.isResting && juarez.paused) {
+                                    } else if (juarez.isResting &&
+                                        juarez.paused) {
                                       juarez.onClickResume();
                                     }
                                   },
@@ -125,6 +127,8 @@ class JuarezScreen extends StatelessWidget {
                                             style: TextStyle(fontSize: 50),
                                             key: ValueKey(2),
                                             textAlign: TextAlign.center,
+                                            overflow: TextOverflow.clip,
+                                            maxLines: 1,
                                           ),
                                   ),
                                 ),
@@ -134,9 +138,15 @@ class JuarezScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.75,
-                                child: Neumorphic(boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(5)),
-                                  style:
-                                      NeumorphicStyle(color: kMainColor, shape: NeumorphicShape.concave, depth: 10, intensity: 0.85, surfaceIntensity: 0.4),
+                                child: Neumorphic(
+                                  boxShape: NeumorphicBoxShape.roundRect(
+                                      BorderRadius.circular(5)),
+                                  style: NeumorphicStyle(
+                                      color: kMainColor,
+                                      shape: NeumorphicShape.concave,
+                                      depth: 10,
+                                      intensity: 0.85,
+                                      surfaceIntensity: 0.4),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
