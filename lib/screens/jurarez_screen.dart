@@ -37,11 +37,14 @@ class JuarezScreen extends StatelessWidget {
                                     }
                                     Navigator.of(context).pop();
                                   }),
+                                  Spacer(flex: 2,),
                               Text(
-                                "Juarez's Valley",
+                                "Juarez Valley",
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.blueGrey),
                               ),
+                              Spacer(flex: 3,),
+                              SizedBox()
                             ],
                           ),
                           SizedBox(

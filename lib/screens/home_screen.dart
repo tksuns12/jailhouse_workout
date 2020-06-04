@@ -88,7 +88,7 @@ class _MainScreenState extends State<MainScreen> {
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: Center(
                       child: Text(
-                        "Juarez's Valley",
+                        "Juarez Valley",
                         style: TextStyle(fontSize: 30),
                       ),
                     ),

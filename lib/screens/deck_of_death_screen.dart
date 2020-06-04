@@ -27,7 +27,7 @@ class DeckOfDeathScreen extends StatelessWidget {
                           )
                     : Column(
                         children: <Widget>[
-                          Row(
+                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               NeumorphicButton(
                                   margin: EdgeInsets.all(7),
@@ -41,6 +41,7 @@ class DeckOfDeathScreen extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.blueGrey),
                               ),
+                              SizedBox(width: 25,)
                             ],
                           ),
                           SizedBox(
