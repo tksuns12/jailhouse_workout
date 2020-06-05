@@ -20,14 +20,14 @@ class JuarezProvider with ChangeNotifier {
   bool hasBegun = false;
   bool paused;
   int pausedTime;
+  AnimationController controller;
 
-  JuarezProvider() {
+  JuarezProvider() {}
+
+  void initialize() {
     player = AudioCache();
     _height = Hive.box('AppData').get(kJuarezHeightKey);
     rest = Hive.box('AppData').get(kJuarezRestKey);
-  }
-
-  void initialize() {
     hasBegun = false;
     isDone = false;
     isResting = false;
@@ -76,7 +76,7 @@ class JuarezProvider with ChangeNotifier {
 
   void onClickPause() {
     timer.cancel();
-    pausedTime =  int.parse(displayedRestingTime);
+    pausedTime = int.parse(displayedRestingTime);
     paused = true;
     notifyListeners();
   }
@@ -86,10 +86,11 @@ class JuarezProvider with ChangeNotifier {
     setTimer(pausedTime);
   }
 
-  void setTimer(int restTime) {
+  void setTimer(int rest) {
+    int restTime = rest;
     timer = Timer.periodic(Duration(seconds: 1), (timer) async {
       if (restTime >= 1) {
-        displayedRestingTime = (restTime--).toString();
+        displayedRestingTime = ((restTime--)).toString();
         if (restTime < 5) {
           await player.play('sounds/short_beep.mp3');
         }
@@ -99,17 +100,9 @@ class JuarezProvider with ChangeNotifier {
         await player.play('sounds/long_beep.mp3');
         isResting = false;
         timer.cancel();
+        displayedRestingTime = rest.toString();
       }
       notifyListeners();
     });
-  }
-
-  Future<void> onRestFinished() async {
-    if (reps.length > 0 && !isResting) {
-      isResting = false;
-      displayedReps = reps.first.toString();
-      reps.removeAt(0);
-      await player.play('sounds/long_beep.mp3');
-    }
   }
 }

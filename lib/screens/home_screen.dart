@@ -67,7 +67,7 @@ class _MainScreenState extends State<MainScreen> {
                       boxShape: NeumorphicBoxShape.circle(),
                       child: Icon(
                         FontAwesomeIcons.bars,
-                        color: Colors.black,
+                        color: kAccentColor,
                       ),
                       style: NeumorphicStyle(color: kMainColor, intensity: 0.9),
                     )
@@ -89,7 +89,7 @@ class _MainScreenState extends State<MainScreen> {
                     child: Center(
                       child: Text(
                         "Juarez Valley",
-                        style: TextStyle(fontSize: 30),
+                        style: TextStyle(fontSize: 30, color: kAccentColor),
                       ),
                     ),
                   ),
@@ -118,7 +118,7 @@ class _MainScreenState extends State<MainScreen> {
                       child: Text(
                         "Pyramid\n&\nReverse Pyramid",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 30),
+                        style: TextStyle(fontSize: 30, color: kAccentColor),
                       ),
                     ),
                   ),
@@ -146,7 +146,7 @@ class _MainScreenState extends State<MainScreen> {
                     child: Center(
                       child: Text(
                         "Deck of Death",
-                        style: TextStyle(fontSize: 30),
+                        style: TextStyle(fontSize: 30, color: kAccentColor),
                       ),
                     ),
                   ),

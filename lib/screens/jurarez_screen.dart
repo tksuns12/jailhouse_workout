@@ -1,471 +1,258 @@
+import 'dart:math';
+
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:jailhouseworkout/consts.dart';
 import 'package:jailhouseworkout/prefs.dart';
 import 'package:jailhouseworkout/providers/juarez_provider.dart';
 import 'package:provider/provider.dart';
 
-class JuarezScreen extends StatelessWidget {
+class JuarezScreen extends StatefulWidget {
+  @override
+  _JuarezScreenState createState() => _JuarezScreenState();
+}
+
+class _JuarezScreenState extends State<JuarezScreen>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() async {
+    super.dispose();
+    controller.dispose();
+  }
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (BuildContext context, JuarezProvider juarez, Widget child) {
-        return WillPopScope(
-            child: Material(
-              color: kMainColor,
-              child: juarez.isDone
-                  ? Container(
-                      child: Center(
-                        child: Text("Well Done!"),
+    final staticJuarez = Provider.of<JuarezProvider>(context, listen: false);
+    return WillPopScope(
+      onWillPop: () {
+        if (staticJuarez.isResting) {
+          staticJuarez.timer.cancel();
+          controller.stop();
+        }
+        return (Future(() => true));
+      },
+      child: SafeArea(
+        child: Material(
+          color: kMainColor,
+          child: Column(
+            children: <Widget>[
+              Spacer(),
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  NeumorphicButton(
+                    onPressed: () {
+                      if (staticJuarez.isResting) {
+                        staticJuarez.timer.cancel();
+                        controller.stop();
+                      }
+                      Navigator.of(context).pop();
+                    },
+                    boxShape: NeumorphicBoxShape.circle(),
+                    child: Icon(Icons.arrow_back, color: kAccentColor),
+                    style: NeumorphicStyle(color: kMainColor),
+                  ),
+                  Spacer(),
+                  Text(
+                    "Juarez Valley",
+                    style: TextStyle(fontSize: 25, color: kAccentColor),
+                  ),
+                  Spacer(),
+                  NeumorphicButton(
+                    boxShape: NeumorphicBoxShape.circle(),
+                    child: Icon(FontAwesomeIcons.cog, color: kAccentColor),
+                    style: NeumorphicStyle(color: kMainColor),
+                  ),
+                  Spacer(),
+                ],
+              ),
+              Spacer(),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.width * 0.8,
+                child: Stack(
+                  children: [
+                    Neumorphic(
+                      padding: EdgeInsets.all(12),
+                      boxShape: NeumorphicBoxShape.circle(),
+                      style: NeumorphicStyle(
+                        depth: -3,
+                        intensity: 1,
+                        shape: NeumorphicShape.concave,
                       ),
-                    )
-                  : SafeArea(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              NeumorphicButton(
-                                  margin: EdgeInsets.all(7),
-                                  boxShape: NeumorphicBoxShape.circle(),
-                                  child: Icon(Icons.arrow_back),
-                                  style: NeumorphicStyle(
-                                      color: kMainColor, intensity: 0.9),
-                                  onPressed: () {
-                                    if (juarez.isResting) {
-                                      juarez.timer.cancel();
-                                    }
-                                    Navigator.of(context).pop();
-                                  }),
-                                  Spacer(flex: 2,),
-                              Text(
-                                "Juarez Valley",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.blueGrey),
-                              ),
-                              Spacer(flex: 3,),
-                              SizedBox()
-                            ],
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.07,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.05,
-                                child: juarez.isResting
-                                    ? Center(
-                                        child: Text(
-                                            "Next Rep: ${juarez.reps[0]}\nSets Left: ${juarez.reps.length}"),
-                                      )
-                                    : SizedBox(),
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.41,
-                                width:
-                                    MediaQuery.of(context).size.height * 0.41,
-                                child: NeumorphicButton(
-                                  onPressed: () {
-                                    if (!juarez.hasBegun) {
-                                      juarez.start();
-                                    } else if (!juarez.isResting) {
-                                      juarez.onClickRepFinished();
-                                    } else if (juarez.isResting &&
-                                        !juarez.paused) {
-                                      juarez.onClickPause();
-                                    } else if (juarez.isResting &&
-                                        juarez.paused) {
-                                      juarez.onClickResume();
-                                    }
-                                  },
-                                  margin: EdgeInsets.all(20),
-                                  padding: EdgeInsets.all(55),
-                                  boxShape: NeumorphicBoxShape.circle(),
-                                  style: NeumorphicStyle(
-                                      surfaceIntensity:
-                                          juarez.isResting ? 0.8 : 0.45,
-                                      shape: juarez.hasBegun
-                                          ? juarez.isResting
-                                              ? NeumorphicShape.concave
-                                              : NeumorphicShape.flat
-                                          : NeumorphicShape.flat,
-                                      intensity: 1,
-                                      lightSource: LightSource.topLeft,
-                                      border: NeumorphicBorder(
-                                          color: Colors.white, width: 3.5),
-                                      depth: juarez.isResting ? -10 : 10,
-                                      color: kMainColor),
-                                  child: AnimatedSwitcher(
-                                    transitionBuilder: (child, animation) {
-                                      return SlideTransition(
-                                        position: Tween<Offset>(
-                                          begin: Offset(2, 0),
-                                          end: const Offset(0, 0),
-                                        ).animate(animation),
-                                        child: child,
-                                      );
-                                    },
-                                    duration: Duration(milliseconds: 500),
+                      child: Neumorphic(
+                        padding: EdgeInsets.all(40),
+                        boxShape: NeumorphicBoxShape.circle(),
+                        style: NeumorphicStyle(
+                            depth: 3,
+                            shape: NeumorphicShape.flat,
+                            intensity: 0.7,
+                            color: kMainColor),
+                        child: Neumorphic(
+                          padding: EdgeInsets.all(6),
+                          boxShape: NeumorphicBoxShape.circle(),
+                          style: NeumorphicStyle(depth: -2),
+                          child: Consumer(
+                            builder: (BuildContext context,
+                                JuarezProvider juarez, Widget child) {
+                              return Neumorphic(
+                                boxShape: NeumorphicBoxShape.circle(),
+                                style: NeumorphicStyle(
+                                    depth: 7, color: kMainColor),
+                                child: Center(
                                     child: juarez.hasBegun
                                         ? juarez.isResting
                                             ? Text(
-                                                "${juarez.displayedRestingTime}",
-                                                key: ValueKey(0),
-                                                style: TextStyle(fontSize: 50),
-                                                textAlign: TextAlign.center,
-                                              )
+                                                "${juarez.displayedRestingTime}")
                                             : Text(
-                                                "REPS\n${juarez.displayedReps}",
-                                                key: ValueKey(1),
-                                                style: TextStyle(fontSize: 50),
-                                                textAlign: TextAlign.center,
-                                              )
+                                                "REPS\n ${juarez.displayedReps}")
                                         : Text(
                                             "START",
-                                            style: TextStyle(fontSize: 50),
-                                            key: ValueKey(2),
-                                            textAlign: TextAlign.center,
-                                            overflow: TextOverflow.clip,
-                                            maxLines: 1,
-                                          ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.75,
-                                child: Neumorphic(
-                                  boxShape: NeumorphicBoxShape.roundRect(
-                                      BorderRadius.circular(5)),
-                                  style: NeumorphicStyle(
-                                      color: kMainColor,
-                                      shape: NeumorphicShape.concave,
-                                      depth: 10,
-                                      intensity: 0.85,
-                                      surfaceIntensity: 0.4),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.all(15),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Text(
-                                              "HEIGHT",
-                                              style: TextStyle(fontSize: 15),
-                                            ),
-                                            NeumorphicButton(
-                                              isEnabled: !juarez.hasBegun,
-                                              onPressed: () {
-                                                final _formKey0 =
-                                                    GlobalKey<FormState>();
-                                                String text;
-                                                RegExp _int = RegExp(
-                                                    r'^(?:-?(?:0|[1-9][0-9]*))$');
-                                                showDialog(
-                                                    context: context,
-                                                    child: AlertDialog(
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          20)),
-                                                      content: Neumorphic(
-                                                        boxShape:
-                                                            NeumorphicBoxShape
-                                                                .roundRect(
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            20)),
-                                                        child: Form(
-                                                          key: _formKey0,
-                                                          child: TextFormField(
-                                                            controller:
-                                                                TextEditingController()
-                                                                  ..text =
-                                                                      "${juarez.height}",
-                                                            validator: (value) {
-                                                              if (value
-                                                                      .length ==
-                                                                  0) {
-                                                                return 'Enter Some Number';
-                                                              } else if (!_int
-                                                                  .hasMatch(
-                                                                      value)) {
-                                                                return 'Invalid Input';
-                                                              } else if (value
-                                                                      .length >
-                                                                  2) {
-                                                                return 'Number is Too Large';
-                                                              } else {
-                                                                return null;
-                                                              }
-                                                            },
-                                                            onChanged: (value) {
-                                                              text = value;
-                                                            },
-                                                            keyboardType:
-                                                                TextInputType
-                                                                    .number,
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            decoration: InputDecoration(
-                                                                border:
-                                                                    InputBorder
-                                                                        .none,
-                                                                hintText:
-                                                                    "Enter Height of Valley",
-                                                                contentPadding:
-                                                                    EdgeInsets
-                                                                        .all(
-                                                                            10)),
-                                                          ),
-                                                        ),
-                                                        style: NeumorphicStyle(
-                                                            color: Color(
-                                                                0xFFe0e5ec),
-                                                            depth: -10,
-                                                            intensity: 1),
-                                                      ),
-                                                      backgroundColor:
-                                                          kMainColor,
-                                                      actions: <Widget>[
-                                                        NeumorphicButton(
-                                                            style: NeumorphicStyle(
-                                                                color: Color(
-                                                                    0xFFe0e5ec)),
-                                                            onPressed:
-                                                                () async {
-                                                              if (text ==
-                                                                  null) {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              } else if (_formKey0
-                                                                  .currentState
-                                                                  .validate()) {
-                                                                juarez.setHeight(
-                                                                    int.parse(
-                                                                        text));
-                                                                juarez
-                                                                    .initialize();
-                                                                await Hive.box(
-                                                                        "AppData")
-                                                                    .put(
-                                                                        kJuarezHeightKey,
-                                                                        int.parse(
-                                                                            text));
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              }
-                                                            },
-                                                            child: Text("OK")),
-                                                        NeumorphicButton(
-                                                            style: NeumorphicStyle(
-                                                                color: Color(
-                                                                    0xFFe0e5ec)),
-                                                            onPressed: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child:
-                                                                Text("Cancel"))
-                                                      ],
-                                                    ));
-                                              },
-                                              boxShape:
-                                                  NeumorphicBoxShape.roundRect(
-                                                      BorderRadius.circular(3)),
-                                              margin: EdgeInsets.symmetric(
-                                                  vertical: 10),
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 30),
-                                              style: NeumorphicStyle(
-                                                  color: kMainColor),
-                                              child: Text(
-                                                "${juarez.height}",
-                                                style: TextStyle(fontSize: 30),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(15),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Text(
-                                              "REST",
-                                              style: TextStyle(fontSize: 15),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            NeumorphicButton(
-                                              isEnabled: !juarez.hasBegun,
-                                              onPressed: () {
-                                                final _formKey1 =
-                                                    GlobalKey<FormState>();
-                                                String text;
-                                                RegExp _int = RegExp(
-                                                    r'^(?:-?(?:0|[1-9][0-9]*))$');
-                                                showDialog(
-                                                    context: context,
-                                                    child: AlertDialog(
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          20)),
-                                                      content: Neumorphic(
-                                                        boxShape:
-                                                            NeumorphicBoxShape
-                                                                .roundRect(
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            20)),
-                                                        child: Form(
-                                                          key: _formKey1,
-                                                          child: TextFormField(
-                                                            controller:
-                                                                TextEditingController()
-                                                                  ..text =
-                                                                      "${juarez.rest}",
-                                                            validator: (value) {
-                                                              if (value
-                                                                      .length ==
-                                                                  0) {
-                                                                return 'Enter Some Number';
-                                                              } else if (!_int
-                                                                  .hasMatch(
-                                                                      value)) {
-                                                                return 'Invalid Input';
-                                                              } else if (value
-                                                                      .length >
-                                                                  2) {
-                                                                return 'Number is Too Large';
-                                                              } else {
-                                                                return null;
-                                                              }
-                                                            },
-                                                            onChanged: (value) {
-                                                              text = value;
-                                                            },
-                                                            keyboardType:
-                                                                TextInputType
-                                                                    .number,
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            decoration: InputDecoration(
-                                                                border:
-                                                                    InputBorder
-                                                                        .none,
-                                                                hintText:
-                                                                    "Enter Rest Second per Rep",
-                                                                contentPadding:
-                                                                    EdgeInsets
-                                                                        .all(
-                                                                            10)),
-                                                          ),
-                                                        ),
-                                                        style: NeumorphicStyle(
-                                                            color: Color(
-                                                                0xFFe0e5ec),
-                                                            depth: -10,
-                                                            intensity: 1),
-                                                      ),
-                                                      backgroundColor:
-                                                          kMainColor,
-                                                      actions: <Widget>[
-                                                        NeumorphicButton(
-                                                            style: NeumorphicStyle(
-                                                                color: Color(
-                                                                    0xFFe0e5ec)),
-                                                            onPressed:
-                                                                () async {
-                                                              if (text ==
-                                                                  null) {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              } else if (_formKey1
-                                                                  .currentState
-                                                                  .validate()) {
-                                                                juarez.setRest(
-                                                                    int.parse(
-                                                                        text));
-                                                                await Hive.box(
-                                                                        "AppData")
-                                                                    .put(
-                                                                        kJuarezRestKey,
-                                                                        int.parse(
-                                                                            text));
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              }
-                                                            },
-                                                            child: Text("OK")),
-                                                        NeumorphicButton(
-                                                            style: NeumorphicStyle(
-                                                                color: Color(
-                                                                    0xFFe0e5ec)),
-                                                            onPressed: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child:
-                                                                Text("Cancel"))
-                                                      ],
-                                                    ));
-                                              },
-                                              boxShape:
-                                                  NeumorphicBoxShape.roundRect(
-                                                      BorderRadius.circular(3)),
-                                              margin: EdgeInsets.symmetric(
-                                                  vertical: 10),
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 30),
-                                              style: NeumorphicStyle(
-                                                  color: kMainColor),
-                                              child: Text(
-                                                "${juarez.rest}",
-                                                style: TextStyle(fontSize: 30),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
+                                          )),
+                              );
+                            },
                           ),
-                        ],
+                        ),
                       ),
                     ),
-            ),
-            onWillPop: () {
-              if (juarez.isResting) {
-                juarez.timer.cancel();
-              }
-              return Future(() => true);
-            });
-      },
+                    CustomPaint(
+                      size: Size.fromHeight(
+                          MediaQuery.of(context).size.width * 0.8),
+                      foregroundPainter:
+                          CircularIndicatorPainter(controller, staticJuarez),
+                    )
+                  ],
+                ),
+              ),
+              Spacer(flex: 2),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Spacer(
+                    flex: 1,
+                  ),
+                  NeumorphicButton(
+                    onPressed: () {},
+                    boxShape: NeumorphicBoxShape.circle(),
+                    child: Icon(FontAwesomeIcons.redo, color: kAccentColor),
+                    style: NeumorphicStyle(color: kMainColor),
+                  ),
+                  Spacer(
+                    flex: 2,
+                  ),
+                  NeumorphicButton(
+                    onPressed: () {
+                      if (!staticJuarez.hasBegun) {
+                        staticJuarez.start();
+                      } else if (staticJuarez.isResting &&
+                          !staticJuarez.paused) {
+                        staticJuarez.onClickPause();
+                        controller.stop();
+                      } else if (staticJuarez.isResting &&
+                          staticJuarez.paused) {
+                        staticJuarez.onClickResume();
+                        controller.forward(from: controller.value);
+                      }
+                    },
+                    boxShape: NeumorphicBoxShape.circle(),
+                    child: Consumer(
+                      builder: (BuildContext context, JuarezProvider juarez,
+                          Widget child) {
+                        return Icon(
+                            !juarez.isResting || juarez.paused
+                                ? FontAwesomeIcons.play
+                                : FontAwesomeIcons.pause,
+                            color: kAccentColor);
+                      },
+                    ),
+                    style: NeumorphicStyle(color: kMainColor),
+                  ),
+                  Spacer(
+                    flex: 2,
+                  ),
+                  NeumorphicButton(
+                    onPressed: () {
+                      if (!staticJuarez.isResting && staticJuarez.hasBegun) {
+                        staticJuarez.onClickRepFinished();
+                        controller
+                          ..duration = Duration(seconds: staticJuarez.rest + 1);
+                        controller.forward(from: 0);
+                      }
+                    },
+                    boxShape: NeumorphicBoxShape.circle(),
+                    child:
+                        Icon(FontAwesomeIcons.stepForward, color: kAccentColor),
+                    style: NeumorphicStyle(color: kMainColor),
+                  ),
+                  Spacer(
+                    flex: 1,
+                  ),
+                ],
+              ),
+              Spacer(
+                flex: 5,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
+
+class CircularIndicatorPainter extends CustomPainter {
+  final Animation<double> animation;
+  final JuarezProvider staticJuarez;
+
+  CircularIndicatorPainter(this.animation, this.staticJuarez)
+      : super(repaint: animation);
+  @override
+  void paint(Canvas canvas, Size size) {
+    final myPaint = Paint()
+      ..color = Colors.greenAccent
+      ..strokeWidth = 5
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke;
+
+    double radius = (size.width / 2 - myPaint.strokeWidth / 2) - 3;
+    Offset center = Offset(size.width / 2, size.height / 2);
+    double arcAngle =
+        staticJuarez.isResting ? (1.0 - animation.value) * 2 * pi : 2 * pi;
+
+    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), -pi / 2,
+        arcAngle, false, myPaint);
+  }
+
+  @override
+  bool shouldRepaint(CircularIndicatorPainter old) {
+    return old.animation.value != animation.value;
+  }
+}
+
+// class NeumorphicCircularIndicator extends AnimatedWidget {
+//   final AnimationController controller;
+//   final Size size;
+
+//   NeumorphicCircularIndicator({this.size, Key key, this.controller})
+//       : super(key: key, listenable: controller);
+
+//   Animation<double> get _progress => listenable;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return CustomPaint(
+//       size: size,
+//       foregroundPainter: CircularIndicatorPainter(_progress),
+//     );
+//   }
+// }
