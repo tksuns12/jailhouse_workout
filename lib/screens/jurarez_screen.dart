@@ -275,7 +275,7 @@ class _JuarezScreenState extends State<JuarezScreen>
                         maintainAnimation: true,
                         maintainSize: true,
                         visible: !juarez.hasBegun || juarez.isResting,
-                        child: NeumorphicButton(
+                        child: NeumorphicButton(padding: EdgeInsets.all(30),
                           onPressed: () {
                             if (!staticJuarez.hasBegun) {
                               staticJuarez.start();
@@ -294,28 +294,33 @@ class _JuarezScreenState extends State<JuarezScreen>
                               !juarez.isResting || juarez.paused
                                   ? FontAwesomeIcons.play
                                   : FontAwesomeIcons.pause,
-                              color: kAccentColor),
+                              color: kAccentColor, size: 40,),
                           style: NeumorphicStyle(color: kMainColor),
                         ),
                       ),
                       Spacer(
                         flex: 2,
                       ),
-                      NeumorphicButton(
-                        onPressed: () {
-                          if (!staticJuarez.isResting &&
-                              staticJuarez.hasBegun) {
-                            staticJuarez.onClickRepFinished();
-                            controller
-                              ..duration =
-                                  Duration(seconds: staticJuarez.rest + 1);
-                            controller.forward(from: 0);
-                          }
-                        },
-                        boxShape: NeumorphicBoxShape.circle(),
-                        child: Icon(FontAwesomeIcons.stepForward,
-                            color: kAccentColor),
-                        style: NeumorphicStyle(color: kMainColor),
+                      Visibility(maintainAnimation: true,
+                      maintainSize: true,
+                      maintainState: true,
+                      visible: juarez.hasBegun,
+                        child: NeumorphicButton(
+                          onPressed: () {
+                            if (!staticJuarez.isResting &&
+                                staticJuarez.hasBegun) {
+                              staticJuarez.onClickRepFinished();
+                              controller
+                                ..duration =
+                                    Duration(seconds: staticJuarez.rest + 1);
+                              controller.forward(from: 0);
+                            }
+                          },
+                          boxShape: NeumorphicBoxShape.circle(),
+                          child: Icon(FontAwesomeIcons.stepForward,
+                              color: kAccentColor),
+                          style: NeumorphicStyle(color: kMainColor),
+                        ),
                       ),
                       Spacer(
                         flex: 1,
