@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -30,6 +28,7 @@ class _JuarezScreenState extends State<JuarezScreen>
     super.dispose();
     controller.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final staticJuarez = Provider.of<JuarezProvider>(context, listen: false);
@@ -69,6 +68,124 @@ class _JuarezScreenState extends State<JuarezScreen>
                   ),
                   Spacer(),
                   NeumorphicButton(
+                    onPressed: () {
+                      String height;
+                      String rest;
+                      final _formKey = GlobalKey<FormState>();
+                      RegExp _isInt = RegExp(r'^(?:-?(?:0|[1-9][0-9]*))$');
+                      showDialog(
+                          context: context,
+                          child: AlertDialog(
+                            backgroundColor: kMainColor,
+                            content: Form(
+                              key: _formKey,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Neumorphic(
+                                    child: TextFormField(
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                          enabledBorder: InputBorder.none,
+                                          border: InputBorder.none,
+                                          hintText: "Enter Max Rep of Juarez",
+                                          contentPadding: EdgeInsets.all(10)),
+                                      keyboardType: TextInputType.number,
+                                      onChanged: (value) {
+                                        height = value;
+                                      },
+                                      controller: TextEditingController()
+                                        ..text = '${staticJuarez.height}',
+                                      validator: (value) {
+                                        if (value.length == 0) {
+                                          return 'Enter Some Number';
+                                        } else if (!_isInt.hasMatch(value)) {
+                                          return 'Invalid Input';
+                                        } else if (value.length > 2) {
+                                          return 'Number is Too Large';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                    ),
+                                    boxShape: NeumorphicBoxShape.roundRect(
+                                      BorderRadius.circular(20),
+                                    ),
+                                    style: NeumorphicStyle(
+                                        depth: 20,
+                                        shape: NeumorphicShape.concave,
+                                        intensity: 0.8,
+                                        color: kMainColor),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Neumorphic(
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: "Enter Rest Time"),
+                                      textAlign: TextAlign.center,
+                                      controller: TextEditingController()
+                                        ..text = "${staticJuarez.rest}",
+                                      validator: (value) {
+                                        if (value.length == 0) {
+                                          return 'Enter Some Number';
+                                        } else if (!_isInt.hasMatch(value)) {
+                                          return 'Invalid Input';
+                                        } else if (value.length > 2) {
+                                          return 'Number is Too Large';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                      onChanged: (value) {
+                                        rest = value;
+                                      },
+                                    ),
+                                    boxShape: NeumorphicBoxShape.roundRect(
+                                        BorderRadius.circular(20)),
+                                    style: NeumorphicStyle(
+                                        depth: 20,
+                                        shape: NeumorphicShape.concave,
+                                        intensity: 0.8,
+                                        color: kMainColor),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              NeumorphicButton(
+                                onPressed: () async {
+                                  if (rest == null && height == null) {
+                                    Navigator.of(context).pop();
+                                  } else if (_formKey.currentState.validate()) {
+                                    if (height != null) {
+                                      staticJuarez.setHeight(int.parse(height));
+                                      await Hive.box("AppData").put(
+                                          kJuarezHeightKey, int.parse(height));
+                                    }
+                                    if (rest != null) {
+                                      staticJuarez.setRest(int.parse(rest));
+                                      await Hive.box("AppData")
+                                          .put(kJuarezRestKey, int.parse(rest));
+                                    }
+                                    Navigator.of(context).pop();
+                                  }
+                                },
+                                child: Text("OK",
+                                    style: TextStyle(color: kAccentColor)),
+                                style: NeumorphicStyle(color: kMainColor),
+                              ),
+                              NeumorphicButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: Text("CANCEL",
+                                    style: TextStyle(color: kAccentColor)),
+                                style: NeumorphicStyle(color: kMainColor),
+                              )
+                            ],
+                          ));
+                    },
                     boxShape: NeumorphicBoxShape.circle(),
                     child: Icon(FontAwesomeIcons.cog, color: kAccentColor),
                     style: NeumorphicStyle(color: kMainColor),
@@ -135,69 +252,77 @@ class _JuarezScreenState extends State<JuarezScreen>
                 ),
               ),
               Spacer(flex: 2),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Spacer(
-                    flex: 1,
-                  ),
-                  NeumorphicButton(
-                    onPressed: () {},
-                    boxShape: NeumorphicBoxShape.circle(),
-                    child: Icon(FontAwesomeIcons.redo, color: kAccentColor),
-                    style: NeumorphicStyle(color: kMainColor),
-                  ),
-                  Spacer(
-                    flex: 2,
-                  ),
-                  NeumorphicButton(
-                    onPressed: () {
-                      if (!staticJuarez.hasBegun) {
-                        staticJuarez.start();
-                      } else if (staticJuarez.isResting &&
-                          !staticJuarez.paused) {
-                        staticJuarez.onClickPause();
-                        controller.stop();
-                      } else if (staticJuarez.isResting &&
-                          staticJuarez.paused) {
-                        staticJuarez.onClickResume();
-                        controller.forward(from: controller.value);
-                      }
-                    },
-                    boxShape: NeumorphicBoxShape.circle(),
-                    child: Consumer(
-                      builder: (BuildContext context, JuarezProvider juarez,
-                          Widget child) {
-                        return Icon(
-                            !juarez.isResting || juarez.paused
-                                ? FontAwesomeIcons.play
-                                : FontAwesomeIcons.pause,
-                            color: kAccentColor);
-                      },
-                    ),
-                    style: NeumorphicStyle(color: kMainColor),
-                  ),
-                  Spacer(
-                    flex: 2,
-                  ),
-                  NeumorphicButton(
-                    onPressed: () {
-                      if (!staticJuarez.isResting && staticJuarez.hasBegun) {
-                        staticJuarez.onClickRepFinished();
-                        controller
-                          ..duration = Duration(seconds: staticJuarez.rest + 1);
-                        controller.forward(from: 0);
-                      }
-                    },
-                    boxShape: NeumorphicBoxShape.circle(),
-                    child:
-                        Icon(FontAwesomeIcons.stepForward, color: kAccentColor),
-                    style: NeumorphicStyle(color: kMainColor),
-                  ),
-                  Spacer(
-                    flex: 1,
-                  ),
-                ],
+              Consumer(
+                builder: (BuildContext context, JuarezProvider juarez,
+                    Widget child) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Spacer(
+                        flex: 1,
+                      ),
+                      NeumorphicButton(
+                        onPressed: () {},
+                        boxShape: NeumorphicBoxShape.circle(),
+                        child: Icon(FontAwesomeIcons.redo, color: kAccentColor),
+                        style: NeumorphicStyle(color: kMainColor),
+                      ),
+                      Spacer(
+                        flex: 2,
+                      ),
+                      Visibility(
+                        maintainState: true,
+                        maintainAnimation: true,
+                        maintainSize: true,
+                        visible: !juarez.hasBegun || juarez.isResting,
+                        child: NeumorphicButton(
+                          onPressed: () {
+                            if (!staticJuarez.hasBegun) {
+                              staticJuarez.start();
+                            } else if (staticJuarez.isResting &&
+                                !staticJuarez.paused) {
+                              staticJuarez.onClickPause();
+                              controller.stop();
+                            } else if (staticJuarez.isResting &&
+                                staticJuarez.paused) {
+                              staticJuarez.onClickResume();
+                              controller.forward(from: controller.value);
+                            }
+                          },
+                          boxShape: NeumorphicBoxShape.circle(),
+                          child: Icon(
+                              !juarez.isResting || juarez.paused
+                                  ? FontAwesomeIcons.play
+                                  : FontAwesomeIcons.pause,
+                              color: kAccentColor),
+                          style: NeumorphicStyle(color: kMainColor),
+                        ),
+                      ),
+                      Spacer(
+                        flex: 2,
+                      ),
+                      NeumorphicButton(
+                        onPressed: () {
+                          if (!staticJuarez.isResting &&
+                              staticJuarez.hasBegun) {
+                            staticJuarez.onClickRepFinished();
+                            controller
+                              ..duration =
+                                  Duration(seconds: staticJuarez.rest + 1);
+                            controller.forward(from: 0);
+                          }
+                        },
+                        boxShape: NeumorphicBoxShape.circle(),
+                        child: Icon(FontAwesomeIcons.stepForward,
+                            color: kAccentColor),
+                        style: NeumorphicStyle(color: kMainColor),
+                      ),
+                      Spacer(
+                        flex: 1,
+                      ),
+                    ],
+                  );
+                },
               ),
               Spacer(
                 flex: 5,
@@ -238,21 +363,3 @@ class CircularIndicatorPainter extends CustomPainter {
     return old.animation.value != animation.value;
   }
 }
-
-// class NeumorphicCircularIndicator extends AnimatedWidget {
-//   final AnimationController controller;
-//   final Size size;
-
-//   NeumorphicCircularIndicator({this.size, Key key, this.controller})
-//       : super(key: key, listenable: controller);
-
-//   Animation<double> get _progress => listenable;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return CustomPaint(
-//       size: size,
-//       foregroundPainter: CircularIndicatorPainter(_progress),
-//     );
-//   }
-// }

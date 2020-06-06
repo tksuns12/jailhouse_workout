@@ -22,7 +22,7 @@ class JuarezProvider with ChangeNotifier {
   int pausedTime;
   AnimationController controller;
 
-  JuarezProvider() {}
+  
 
   void initialize() {
     player = AudioCache();
