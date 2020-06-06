@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:digital_lcd/digital_lcd.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -33,7 +34,6 @@ class _JuarezScreenState extends State<JuarezScreen>
 
   @override
   Widget build(BuildContext context) {
-    
     return WillPopScope(
       onWillPop: () {
         if (staticJuarez.isResting) {
@@ -69,8 +69,9 @@ class _JuarezScreenState extends State<JuarezScreen>
                     style: TextStyle(fontSize: 25, color: kAccentColor),
                   ),
                   Spacer(),
-                  Visibility(visible: !staticJuarez.hasBegun,
-                                      child: NeumorphicButton(
+                  Visibility(
+                    visible: !staticJuarez.hasBegun,
+                    child: NeumorphicButton(
                       onPressed: () {
                         String height;
                         String rest;
@@ -162,16 +163,19 @@ class _JuarezScreenState extends State<JuarezScreen>
                                   onPressed: () async {
                                     if (rest == null && height == null) {
                                       Navigator.of(context).pop();
-                                    } else if (_formKey.currentState.validate()) {
+                                    } else if (_formKey.currentState
+                                        .validate()) {
                                       if (height != null) {
-                                        staticJuarez.setHeight(int.parse(height));
+                                        staticJuarez
+                                            .setHeight(int.parse(height));
                                         await Hive.box("AppData").put(
-                                            kJuarezHeightKey, int.parse(height));
+                                            kJuarezHeightKey,
+                                            int.parse(height));
                                       }
                                       if (rest != null) {
                                         staticJuarez.setRest(int.parse(rest));
-                                        await Hive.box("AppData")
-                                            .put(kJuarezRestKey, int.parse(rest));
+                                        await Hive.box("AppData").put(
+                                            kJuarezRestKey, int.parse(rest));
                                       }
                                       Navigator.of(context).pop();
                                     }
@@ -233,8 +237,25 @@ class _JuarezScreenState extends State<JuarezScreen>
                                 child: Center(
                                     child: juarez.hasBegun
                                         ? juarez.isResting
-                                            ? Text(
-                                                "${juarez.displayedRestingTime}")
+                                            ? Lcd(context).Number(
+                                                activeColor: Colors.red,
+                                                lcdDecoration: BoxDecoration(
+                                                    color: Colors.transparent),
+                                                number: int.parse(juarez
+                                                    .displayedRestingTime),
+                                                digitCount: 2,
+                                                lcdPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 0),
+                                                digitAlignment:
+                                                    MainAxisAlignment.center,
+                                                lcdWidth: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.2,
+                                                lcdHeight: 100,
+                                                segmentWidth: 8,
+                                              )
                                             : Text(
                                                 "REPS\n ${juarez.displayedReps}")
                                         : Text(
@@ -294,7 +315,10 @@ class _JuarezScreenState extends State<JuarezScreen>
                                 !staticJuarez.paused) {
                               staticJuarez.onClickPause();
                               controller.stop();
-                              controller.value = (staticJuarez.rest - staticJuarez.pausedTime-1) / staticJuarez.rest;
+                              controller.value = (staticJuarez.rest -
+                                      staticJuarez.pausedTime -
+                                      1) /
+                                  staticJuarez.rest;
                             } else if (staticJuarez.isResting &&
                                 staticJuarez.paused) {
                               staticJuarez.onClickResume();

@@ -36,6 +36,7 @@ dependencies:
   permission_handler: ^5.0.0+hotfix.6
   wakelock: ^ 0.1.4+1
   flutter_neumorphic: ^2.2.2
+  digital_lcd: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,11 @@ flutter:
   assets:
     - assets/images/
     - assets/sounds/
+  
+  fonts:
+    - family: DungGeunMo
+      fonts:
+        - asset: assets/fonts/DungGeunMo.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
