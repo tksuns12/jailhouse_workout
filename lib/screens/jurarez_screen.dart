@@ -245,9 +245,9 @@ class _JuarezScreenState extends State<JuarezScreen>
                             intensity: 0.7,
                             color: kMainColor),
                         child: Neumorphic(
-                          padding: EdgeInsets.all(6),
+                          padding: EdgeInsets.all(5),
                           boxShape: NeumorphicBoxShape.circle(),
-                          style: NeumorphicStyle(depth: -2),
+                          style: NeumorphicStyle(depth: -2, color: Colors.blueGrey[200]),
                           child: Consumer(
                             builder: (BuildContext context,
                                 JuarezProvider juarez, Widget child) {
