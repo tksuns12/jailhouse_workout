@@ -69,134 +69,155 @@ class _JuarezScreenState extends State<JuarezScreen>
                     style: TextStyle(fontSize: 25, color: kAccentColor),
                   ),
                   Spacer(),
-                  Visibility(
-                    visible: !staticJuarez.hasBegun,
-                    child: NeumorphicButton(
-                      onPressed: () {
-                        String height;
-                        String rest;
-                        final _formKey = GlobalKey<FormState>();
-                        RegExp _isInt = RegExp(r'^(?:-?(?:0|[1-9][0-9]*))$');
-                        showDialog(
-                            context: context,
-                            child: AlertDialog(
-                              backgroundColor: kMainColor,
-                              content: Form(
-                                key: _formKey,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Neumorphic(
-                                      child: TextFormField(
-                                        textAlign: TextAlign.center,
-                                        decoration: InputDecoration(
-                                            enabledBorder: InputBorder.none,
-                                            border: InputBorder.none,
-                                            hintText: "Enter Max Rep of Juarez",
-                                            contentPadding: EdgeInsets.all(10)),
-                                        keyboardType: TextInputType.number,
-                                        onChanged: (value) {
-                                          height = value;
-                                        },
-                                        controller: TextEditingController()
-                                          ..text = '${staticJuarez.height}',
-                                        validator: (value) {
-                                          if (value.length == 0) {
-                                            return 'Enter Some Number';
-                                          } else if (!_isInt.hasMatch(value)) {
-                                            return 'Invalid Input';
-                                          } else if (value.length > 2) {
-                                            return 'Number is Too Large';
-                                          } else {
-                                            return null;
+                  Consumer(
+                    builder: (BuildContext context, JuarezProvider juarez,
+                        Widget child) {
+                      return Visibility(
+                        maintainAnimation: true,
+                        maintainSize: true,
+                        maintainState: true,
+                        visible: !juarez.hasBegun,
+                        child: NeumorphicButton(
+                          onPressed: () {
+                            String height;
+                            String rest;
+                            final _formKey = GlobalKey<FormState>();
+                            RegExp _isInt =
+                                RegExp(r'^(?:-?(?:0|[1-9][0-9]*))$');
+                            showDialog(
+                                context: context,
+                                child: AlertDialog(
+                                  backgroundColor: kMainColor,
+                                  content: Form(
+                                    key: _formKey,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Neumorphic(
+                                          child: TextFormField(
+                                            textAlign: TextAlign.center,
+                                            decoration: InputDecoration(
+                                                enabledBorder: InputBorder.none,
+                                                border: InputBorder.none,
+                                                hintText:
+                                                    "Enter Max Rep of Juarez",
+                                                contentPadding:
+                                                    EdgeInsets.all(10)),
+                                            keyboardType: TextInputType.number,
+                                            onChanged: (value) {
+                                              height = value;
+                                            },
+                                            controller: TextEditingController()
+                                              ..text = '${staticJuarez.height}',
+                                            validator: (value) {
+                                              if (value.length == 0) {
+                                                return 'Enter Some Number';
+                                              } else if (!_isInt
+                                                  .hasMatch(value)) {
+                                                return 'Invalid Input';
+                                              } else if (value.length > 2) {
+                                                return 'Number is Too Large';
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                          ),
+                                          boxShape:
+                                              NeumorphicBoxShape.roundRect(
+                                            BorderRadius.circular(20),
+                                          ),
+                                          style: NeumorphicStyle(
+                                              depth: 20,
+                                              shape: NeumorphicShape.concave,
+                                              intensity: 0.8,
+                                              color: kMainColor),
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Neumorphic(
+                                          child: TextFormField(
+                                            decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: "Enter Rest Time"),
+                                            textAlign: TextAlign.center,
+                                            controller: TextEditingController()
+                                              ..text = "${staticJuarez.rest}",
+                                            validator: (value) {
+                                              if (value.length == 0) {
+                                                return 'Enter Some Number';
+                                              } else if (!_isInt
+                                                  .hasMatch(value)) {
+                                                return 'Invalid Input';
+                                              } else if (value.length > 2) {
+                                                return 'Number is Too Large';
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                            onChanged: (value) {
+                                              rest = value;
+                                            },
+                                          ),
+                                          boxShape:
+                                              NeumorphicBoxShape.roundRect(
+                                                  BorderRadius.circular(20)),
+                                          style: NeumorphicStyle(
+                                              depth: 20,
+                                              shape: NeumorphicShape.concave,
+                                              intensity: 0.8,
+                                              color: kMainColor),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    NeumorphicButton(
+                                      onPressed: () async {
+                                        if (rest == null && height == null) {
+                                          Navigator.of(context).pop();
+                                        } else if (_formKey.currentState
+                                            .validate()) {
+                                          if (height != null) {
+                                            staticJuarez
+                                                .setHeight(int.parse(height));
+                                            await Hive.box("AppData").put(
+                                                kJuarezHeightKey,
+                                                int.parse(height));
                                           }
-                                        },
-                                      ),
-                                      boxShape: NeumorphicBoxShape.roundRect(
-                                        BorderRadius.circular(20),
-                                      ),
-                                      style: NeumorphicStyle(
-                                          depth: 20,
-                                          shape: NeumorphicShape.concave,
-                                          intensity: 0.8,
-                                          color: kMainColor),
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Neumorphic(
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: "Enter Rest Time"),
-                                        textAlign: TextAlign.center,
-                                        controller: TextEditingController()
-                                          ..text = "${staticJuarez.rest}",
-                                        validator: (value) {
-                                          if (value.length == 0) {
-                                            return 'Enter Some Number';
-                                          } else if (!_isInt.hasMatch(value)) {
-                                            return 'Invalid Input';
-                                          } else if (value.length > 2) {
-                                            return 'Number is Too Large';
-                                          } else {
-                                            return null;
+                                          if (rest != null) {
+                                            staticJuarez
+                                                .setRest(int.parse(rest));
+                                            await Hive.box("AppData").put(
+                                                kJuarezRestKey,
+                                                int.parse(rest));
                                           }
-                                        },
-                                        onChanged: (value) {
-                                          rest = value;
-                                        },
-                                      ),
-                                      boxShape: NeumorphicBoxShape.roundRect(
-                                          BorderRadius.circular(20)),
-                                      style: NeumorphicStyle(
-                                          depth: 20,
-                                          shape: NeumorphicShape.concave,
-                                          intensity: 0.8,
-                                          color: kMainColor),
+                                          Navigator.of(context).pop();
+                                        }
+                                      },
+                                      child: Text("OK",
+                                          style:
+                                              TextStyle(color: kAccentColor)),
+                                      style: NeumorphicStyle(color: kMainColor),
                                     ),
+                                    NeumorphicButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      child: Text("CANCEL",
+                                          style:
+                                              TextStyle(color: kAccentColor)),
+                                      style: NeumorphicStyle(color: kMainColor),
+                                    )
                                   ],
-                                ),
-                              ),
-                              actions: <Widget>[
-                                NeumorphicButton(
-                                  onPressed: () async {
-                                    if (rest == null && height == null) {
-                                      Navigator.of(context).pop();
-                                    } else if (_formKey.currentState
-                                        .validate()) {
-                                      if (height != null) {
-                                        staticJuarez
-                                            .setHeight(int.parse(height));
-                                        await Hive.box("AppData").put(
-                                            kJuarezHeightKey,
-                                            int.parse(height));
-                                      }
-                                      if (rest != null) {
-                                        staticJuarez.setRest(int.parse(rest));
-                                        await Hive.box("AppData").put(
-                                            kJuarezRestKey, int.parse(rest));
-                                      }
-                                      Navigator.of(context).pop();
-                                    }
-                                  },
-                                  child: Text("OK",
-                                      style: TextStyle(color: kAccentColor)),
-                                  style: NeumorphicStyle(color: kMainColor),
-                                ),
-                                NeumorphicButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  child: Text("CANCEL",
-                                      style: TextStyle(color: kAccentColor)),
-                                  style: NeumorphicStyle(color: kMainColor),
-                                )
-                              ],
-                            ));
-                      },
-                      boxShape: NeumorphicBoxShape.circle(),
-                      child: Icon(FontAwesomeIcons.cog, color: kAccentColor),
-                      style: NeumorphicStyle(color: kMainColor),
-                    ),
+                                ));
+                          },
+                          boxShape: NeumorphicBoxShape.circle(),
+                          child:
+                              Icon(FontAwesomeIcons.cog, color: kAccentColor),
+                          style: NeumorphicStyle(color: kMainColor),
+                        ),
+                      );
+                    },
                   ),
                   Spacer(),
                 ],
@@ -237,29 +258,84 @@ class _JuarezScreenState extends State<JuarezScreen>
                                 child: Center(
                                     child: juarez.hasBegun
                                         ? juarez.isResting
-                                            ? Lcd(context).Number(
-                                                activeColor: Colors.red,
-                                                lcdDecoration: BoxDecoration(
-                                                    color: Colors.transparent),
-                                                number: int.parse(juarez
-                                                    .displayedRestingTime),
-                                                digitCount: 2,
-                                                lcdPadding:
-                                                    EdgeInsets.symmetric(
-                                                        horizontal: 0),
-                                                digitAlignment:
+                                            ? Column(
+                                                mainAxisAlignment:
                                                     MainAxisAlignment.center,
-                                                lcdWidth: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.2,
-                                                lcdHeight: 100,
-                                                segmentWidth: 8,
+                                                children: <Widget>[
+                                                  Text("REST",
+                                                      style: TextStyle(
+                                                          fontFamily:
+                                                              'DungGeunMo',
+                                                          fontSize: 30,
+                                                          color:
+                                                              kDarkerAccentColor)),
+                                                  Lcd(context).Number(
+                                                    activeColor: Colors.red,
+                                                    lcdDecoration:
+                                                        BoxDecoration(
+                                                            color: Colors
+                                                                .transparent),
+                                                    number: int.parse(juarez
+                                                        .displayedRestingTime),
+                                                    digitCount: 2,
+                                                    lcdPadding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 0),
+                                                    digitAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    lcdWidth:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.2,
+                                                    lcdHeight: 80,
+                                                    segmentWidth: 8,
+                                                  ),
+                                                ],
                                               )
-                                            : Text(
-                                                "REPS\n ${juarez.displayedReps}")
+                                            : Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Text("REPS",
+                                                      style: TextStyle(
+                                                          fontFamily:
+                                                              'DungGeunMo',
+                                                          fontSize: 30,
+                                                          color:
+                                                              kDarkerAccentColor)),
+                                                  Lcd(context).Number(
+                                                    activeColor: Colors.red,
+                                                    lcdDecoration:
+                                                        BoxDecoration(
+                                                            color: Colors
+                                                                .transparent),
+                                                    number: int.parse(
+                                                        juarez.displayedReps),
+                                                    digitCount: 2,
+                                                    lcdPadding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 0),
+                                                    digitAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    lcdWidth:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.2,
+                                                    lcdHeight: 80,
+                                                    segmentWidth: 8,
+                                                  )
+                                                ],
+                                              )
                                         : Text(
                                             "START",
+                                            style: TextStyle(
+                                                fontFamily: 'DungGeunMo',
+                                                fontSize: 50,
+                                                color: kDarkerAccentColor),
                                           )),
                               );
                             },
