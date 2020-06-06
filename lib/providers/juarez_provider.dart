@@ -76,7 +76,7 @@ class JuarezProvider with ChangeNotifier {
 
   void onClickPause() {
     timer.cancel();
-    pausedTime = int.parse(displayedRestingTime);
+    pausedTime = int.parse(displayedRestingTime) - 1 ;
     paused = true;
     notifyListeners();
   }
