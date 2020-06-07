@@ -182,6 +182,7 @@ class _JuarezScreenState extends State<JuarezScreen>
                                           await Hive.box("AppData").put(
                                               kJuarezRestKey, int.parse(rest));
                                         }
+                                        staticJuarez.initialize();
                                         Navigator.of(context).pop();
                                       }
                                     },
@@ -244,82 +245,89 @@ class _JuarezScreenState extends State<JuarezScreen>
                                 style: NeumorphicStyle(
                                     depth: 7, color: kMainColor),
                                 child: Center(
-                                    child: juarez.hasBegun
-                                        ? juarez.isResting
-                                            ? Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  Text("REST",
-                                                      style: TextStyle(
-                                                          fontSize: 25,
-                                                          color:
-                                                              kDarkerAccentColor)),
-                                                  Lcd(context).Number(
-                                                    activeColor: Colors.red,
-                                                    lcdDecoration:
-                                                        BoxDecoration(
-                                                            color: Colors
-                                                                .transparent),
-                                                    number: int.parse(juarez
-                                                        .displayedRestingTime),
-                                                    digitCount: 2,
-                                                    lcdPadding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 0),
-                                                    digitAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    lcdWidth:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.2,
-                                                    lcdHeight: 80,
-                                                    segmentWidth: 8,
-                                                  ),
-                                                ],
-                                              )
-                                            : Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  Text("REPS",
-                                                      style: TextStyle(
-                                                          fontSize: 25,
-                                                          color:
-                                                              kDarkerAccentColor)),
-                                                  Lcd(context).Number(
-                                                    activeColor: Colors.red,
-                                                    lcdDecoration:
-                                                        BoxDecoration(
-                                                            color: Colors
-                                                                .transparent),
-                                                    number: int.parse(
-                                                        juarez.displayedReps),
-                                                    digitCount: 2,
-                                                    lcdPadding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 0),
-                                                    digitAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    lcdWidth:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.2,
-                                                    lcdHeight: 80,
-                                                    segmentWidth: 8,
-                                                  )
-                                                ],
-                                              )
-                                        : Text(
-                                            "START",
+                                    child: juarez.isDone
+                                        ? Text("Well Done!",
                                             style: TextStyle(
-                                                fontSize: 45,
-                                                color: kDarkerAccentColor),
-                                          )),
+                                                fontSize: 25,
+                                                color: kDarkerAccentColor))
+                                        : juarez.hasBegun
+                                            ? juarez.isResting
+                                                ? Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      Text("REST",
+                                                          style: TextStyle(
+                                                              fontSize: 25,
+                                                              color:
+                                                                  kDarkerAccentColor)),
+                                                      Lcd(context).Number(
+                                                        activeColor: Colors.red,
+                                                        lcdDecoration:
+                                                            BoxDecoration(
+                                                                color: Colors
+                                                                    .transparent),
+                                                        number: int.parse(juarez
+                                                            .displayedRestingTime),
+                                                        digitCount: 2,
+                                                        lcdPadding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 0),
+                                                        digitAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        lcdWidth: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.2,
+                                                        lcdHeight: 80,
+                                                        segmentWidth: 8,
+                                                      ),
+                                                    ],
+                                                  )
+                                                : Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      Text("REPS",
+                                                          style: TextStyle(
+                                                              fontSize: 25,
+                                                              color:
+                                                                  kDarkerAccentColor)),
+                                                      Lcd(context).Number(
+                                                        activeColor: Colors.red,
+                                                        lcdDecoration:
+                                                            BoxDecoration(
+                                                                color: Colors
+                                                                    .transparent),
+                                                        number: int.parse(juarez
+                                                            .displayedReps),
+                                                        digitCount: 2,
+                                                        lcdPadding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 0),
+                                                        digitAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        lcdWidth: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.2,
+                                                        lcdHeight: 80,
+                                                        segmentWidth: 8,
+                                                      )
+                                                    ],
+                                                  )
+                                            : Text(
+                                                "START",
+                                                style: TextStyle(
+                                                    fontSize: 45,
+                                                    color: kDarkerAccentColor),
+                                              )),
                               );
                             },
                           ),
@@ -368,7 +376,9 @@ class _JuarezScreenState extends State<JuarezScreen>
                                       activeColor: Colors.red,
                                       lcdDecoration: BoxDecoration(
                                           color: Colors.transparent),
-                                      number: staticJuarez.reps[1],
+                                      number: staticJuarez.reps.length == 0
+                                          ? 0
+                                          : staticJuarez.reps[0],
                                       digitCount: 2,
                                       lcdPadding:
                                           EdgeInsets.symmetric(horizontal: 0),
@@ -476,10 +486,12 @@ class _JuarezScreenState extends State<JuarezScreen>
                           if (!staticJuarez.isResting &&
                               staticJuarez.hasBegun) {
                             staticJuarez.onClickRepFinished();
-                            controller
-                              ..duration =
-                                  Duration(seconds: staticJuarez.rest + 1);
-                            controller.forward(from: 0);
+                            if (staticJuarez.reps.length != 0) {
+                              controller
+                                ..duration =
+                                    Duration(seconds: staticJuarez.rest + 1);
+                              controller.forward(from: 0);
+                            }
                           } else if (staticJuarez.isResting) {
                             staticJuarez.onClickSkip();
                             controller.stop();
