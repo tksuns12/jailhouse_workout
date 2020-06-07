@@ -209,7 +209,7 @@ class _JuarezScreenState extends State<JuarezScreen>
                   Spacer(),
                 ],
               ),
-              Spacer(),
+              Spacer(flex: 4),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.8,
                 height: MediaQuery.of(context).size.width * 0.8,
@@ -335,9 +335,83 @@ class _JuarezScreenState extends State<JuarezScreen>
                   ],
                 ),
               ),
-              Row(
-                children: <Widget>[],
-              ),
+              Spacer(flex: 2),
+              SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Neumorphic(
+                    padding: EdgeInsets.all(2),
+                    boxShape:
+                        NeumorphicBoxShape.roundRect(BorderRadius.circular(10)),
+                    style: NeumorphicStyle(color: kMainColor, depth: 7),
+                    child: Neumorphic(
+                      style: NeumorphicStyle(color: kMainColor, depth: -3),
+                      boxShape: NeumorphicBoxShape.roundRect(
+                          BorderRadius.circular(10)),
+                      child: Consumer(builder: (BuildContext context,
+                          JuarezProvider juarez, Widget child) {
+                        return Visibility(
+                          visible: juarez.hasBegun,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      "Next Reps",
+                                      style:
+                                          TextStyle(color: kDarkerAccentColor),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Lcd(context).Number(
+                                      activeColor: Colors.red,
+                                      lcdDecoration: BoxDecoration(
+                                          color: Colors.transparent),
+                                      number: staticJuarez.reps[1],
+                                      digitCount: 2,
+                                      lcdPadding:
+                                          EdgeInsets.symmetric(horizontal: 0),
+                                      digitAlignment: MainAxisAlignment.center,
+                                      lcdWidth:
+                                          MediaQuery.of(context).size.width *
+                                              0.15,
+                                      lcdHeight: 50,
+                                      segmentWidth: 8,
+                                    )
+                                  ]),
+                              SizedBox(width: 20),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    "Sets Left",
+                                    style: TextStyle(color: kDarkerAccentColor),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Lcd(context).Number(
+                                    activeColor: Colors.red,
+                                    lcdDecoration: BoxDecoration(
+                                        color: Colors.transparent),
+                                    number: staticJuarez.reps.length,
+                                    digitCount: 2,
+                                    lcdPadding:
+                                        EdgeInsets.symmetric(horizontal: 0),
+                                    digitAlignment: MainAxisAlignment.center,
+                                    lcdWidth:
+                                        MediaQuery.of(context).size.width *
+                                            0.15,
+                                    lcdHeight: 50,
+                                    segmentWidth: 8,
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        );
+                      }),
+                    ),
+                  )),
               Spacer(flex: 2),
               Consumer(
                 builder: (BuildContext context, JuarezProvider juarez,
@@ -425,7 +499,7 @@ class _JuarezScreenState extends State<JuarezScreen>
                 },
               ),
               Spacer(
-                flex: 5,
+                flex: 4,
               ),
             ],
           ),
