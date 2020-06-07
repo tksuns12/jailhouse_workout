@@ -86,6 +86,16 @@ class JuarezProvider with ChangeNotifier {
     setTimer(pausedTime);
   }
 
+  Future<void> onClickSkip() async {
+    if (isResting) {
+      timer.cancel();
+      isResting = false;
+      displayedReps = reps.first.toString();
+      reps.removeAt(0);
+      await player.play('sounds/long_beep.mp3');}
+      notifyListeners();
+  }
+
   void setTimer(int rest) {
     int restTime = rest;
     timer = Timer.periodic(Duration(seconds: 1), (timer) async {

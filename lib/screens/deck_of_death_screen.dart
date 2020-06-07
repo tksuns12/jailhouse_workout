@@ -37,7 +37,7 @@ class DeckOfDeathScreen extends StatelessWidget {
                                   style: NeumorphicStyle(
                                       color: kMainColor, intensity: 0.9),
                                   onPressed: () {
-                                    if (deck.hasBegun){
+                                    if (deck.hasBegun && !deck.isInfinite){
                                     deck.timer.cancel();}
                                     Navigator.of(context).pop();
                                   }),

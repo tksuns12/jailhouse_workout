@@ -72,150 +72,137 @@ class _JuarezScreenState extends State<JuarezScreen>
                   Consumer(
                     builder: (BuildContext context, JuarezProvider juarez,
                         Widget child) {
-                      return Visibility(
-                        maintainAnimation: true,
-                        maintainSize: true,
-                        maintainState: true,
-                        visible: !juarez.hasBegun,
-                        child: NeumorphicButton(
-                          onPressed: () {
-                            String height;
-                            String rest;
-                            final _formKey = GlobalKey<FormState>();
-                            RegExp _isInt =
-                                RegExp(r'^(?:-?(?:0|[1-9][0-9]*))$');
-                            showDialog(
-                                context: context,
-                                child: AlertDialog(
-                                  backgroundColor: kMainColor,
-                                  content: Form(
-                                    key: _formKey,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Neumorphic(
-                                          child: TextFormField(
-                                            textAlign: TextAlign.center,
-                                            decoration: InputDecoration(
-                                                enabledBorder: InputBorder.none,
-                                                border: InputBorder.none,
-                                                hintText:
-                                                    "Enter Max Rep of Juarez",
-                                                contentPadding:
-                                                    EdgeInsets.all(10)),
-                                            keyboardType: TextInputType.number,
-                                            onChanged: (value) {
-                                              height = value;
-                                            },
-                                            controller: TextEditingController()
-                                              ..text = '${staticJuarez.height}',
-                                            validator: (value) {
-                                              if (value.length == 0) {
-                                                return 'Enter Some Number';
-                                              } else if (!_isInt
-                                                  .hasMatch(value)) {
-                                                return 'Invalid Input';
-                                              } else if (value.length > 2) {
-                                                return 'Number is Too Large';
-                                              } else {
-                                                return null;
-                                              }
-                                            },
-                                          ),
-                                          boxShape:
-                                              NeumorphicBoxShape.roundRect(
-                                            BorderRadius.circular(20),
-                                          ),
-                                          style: NeumorphicStyle(
-                                              depth: 20,
-                                              shape: NeumorphicShape.concave,
-                                              intensity: 0.8,
-                                              color: kMainColor),
+                      return NeumorphicButton(
+                        onPressed: () {
+                          String height;
+                          String rest;
+                          final _formKey = GlobalKey<FormState>();
+                          RegExp _isInt = RegExp(r'^(?:-?(?:0|[1-9][0-9]*))$');
+                          showDialog(
+                              context: context,
+                              child: AlertDialog(
+                                backgroundColor: kMainColor,
+                                content: Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Neumorphic(
+                                        child: TextFormField(
+                                          textAlign: TextAlign.center,
+                                          decoration: InputDecoration(
+                                              enabledBorder: InputBorder.none,
+                                              border: InputBorder.none,
+                                              hintText:
+                                                  "Enter Max Rep of Juarez",
+                                              contentPadding:
+                                                  EdgeInsets.all(10)),
+                                          keyboardType: TextInputType.number,
+                                          onChanged: (value) {
+                                            height = value;
+                                          },
+                                          controller: TextEditingController()
+                                            ..text = '${staticJuarez.height}',
+                                          validator: (value) {
+                                            if (value.length == 0) {
+                                              return 'Enter Some Number';
+                                            } else if (!_isInt
+                                                .hasMatch(value)) {
+                                              return 'Invalid Input';
+                                            } else if (value.length > 2) {
+                                              return 'Number is Too Large';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
                                         ),
-                                        SizedBox(
-                                          height: 20,
+                                        boxShape: NeumorphicBoxShape.roundRect(
+                                          BorderRadius.circular(20),
                                         ),
-                                        Neumorphic(
-                                          child: TextFormField(
-                                            decoration: InputDecoration(
-                                                border: InputBorder.none,
-                                                hintText: "Enter Rest Time"),
-                                            textAlign: TextAlign.center,
-                                            controller: TextEditingController()
-                                              ..text = "${staticJuarez.rest}",
-                                            validator: (value) {
-                                              if (value.length == 0) {
-                                                return 'Enter Some Number';
-                                              } else if (!_isInt
-                                                  .hasMatch(value)) {
-                                                return 'Invalid Input';
-                                              } else if (value.length > 2) {
-                                                return 'Number is Too Large';
-                                              } else {
-                                                return null;
-                                              }
-                                            },
-                                            onChanged: (value) {
-                                              rest = value;
-                                            },
-                                          ),
-                                          boxShape:
-                                              NeumorphicBoxShape.roundRect(
-                                                  BorderRadius.circular(20)),
-                                          style: NeumorphicStyle(
-                                              depth: 20,
-                                              shape: NeumorphicShape.concave,
-                                              intensity: 0.8,
-                                              color: kMainColor),
+                                        style: NeumorphicStyle(
+                                            depth: 20,
+                                            shape: NeumorphicShape.concave,
+                                            intensity: 0.8,
+                                            color: kMainColor),
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Neumorphic(
+                                        child: TextFormField(
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              hintText: "Enter Rest Time"),
+                                          textAlign: TextAlign.center,
+                                          controller: TextEditingController()
+                                            ..text = "${staticJuarez.rest}",
+                                          validator: (value) {
+                                            if (value.length == 0) {
+                                              return 'Enter Some Number';
+                                            } else if (!_isInt
+                                                .hasMatch(value)) {
+                                              return 'Invalid Input';
+                                            } else if (value.length > 2) {
+                                              return 'Number is Too Large';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          onChanged: (value) {
+                                            rest = value;
+                                          },
                                         ),
-                                      ],
-                                    ),
+                                        boxShape: NeumorphicBoxShape.roundRect(
+                                            BorderRadius.circular(20)),
+                                        style: NeumorphicStyle(
+                                            depth: 20,
+                                            shape: NeumorphicShape.concave,
+                                            intensity: 0.8,
+                                            color: kMainColor),
+                                      ),
+                                    ],
                                   ),
-                                  actions: <Widget>[
-                                    NeumorphicButton(
-                                      onPressed: () async {
-                                        if (rest == null && height == null) {
-                                          Navigator.of(context).pop();
-                                        } else if (_formKey.currentState
-                                            .validate()) {
-                                          if (height != null) {
-                                            staticJuarez
-                                                .setHeight(int.parse(height));
-                                            await Hive.box("AppData").put(
-                                                kJuarezHeightKey,
-                                                int.parse(height));
-                                          }
-                                          if (rest != null) {
-                                            staticJuarez
-                                                .setRest(int.parse(rest));
-                                            await Hive.box("AppData").put(
-                                                kJuarezRestKey,
-                                                int.parse(rest));
-                                          }
-                                          Navigator.of(context).pop();
+                                ),
+                                actions: <Widget>[
+                                  NeumorphicButton(
+                                    onPressed: () async {
+                                      if (rest == null && height == null) {
+                                        Navigator.of(context).pop();
+                                      } else if (_formKey.currentState
+                                          .validate()) {
+                                        if (height != null) {
+                                          staticJuarez
+                                              .setHeight(int.parse(height));
+                                          await Hive.box("AppData").put(
+                                              kJuarezHeightKey,
+                                              int.parse(height));
                                         }
-                                      },
-                                      child: Text("OK",
-                                          style:
-                                              TextStyle(color: kAccentColor)),
-                                      style: NeumorphicStyle(color: kMainColor),
-                                    ),
-                                    NeumorphicButton(
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(),
-                                      child: Text("CANCEL",
-                                          style:
-                                              TextStyle(color: kAccentColor)),
-                                      style: NeumorphicStyle(color: kMainColor),
-                                    )
-                                  ],
-                                ));
-                          },
-                          boxShape: NeumorphicBoxShape.circle(),
-                          child:
-                              Icon(FontAwesomeIcons.cog, color: kAccentColor),
-                          style: NeumorphicStyle(color: kMainColor),
-                        ),
+                                        if (rest != null) {
+                                          staticJuarez.setRest(int.parse(rest));
+                                          await Hive.box("AppData").put(
+                                              kJuarezRestKey, int.parse(rest));
+                                        }
+                                        Navigator.of(context).pop();
+                                      }
+                                    },
+                                    child: Text("OK",
+                                        style: TextStyle(color: kAccentColor)),
+                                    style: NeumorphicStyle(color: kMainColor),
+                                  ),
+                                  NeumorphicButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                    child: Text("CANCEL",
+                                        style: TextStyle(color: kAccentColor)),
+                                    style: NeumorphicStyle(color: kMainColor),
+                                  )
+                                ],
+                              ));
+                        },
+                        boxShape: NeumorphicBoxShape.circle(),
+                        child: Icon(FontAwesomeIcons.cog, color: kAccentColor),
+                        style: NeumorphicStyle(color: kMainColor),
+                        isEnabled: !juarez.hasBegun,
                       );
                     },
                   ),
@@ -348,6 +335,9 @@ class _JuarezScreenState extends State<JuarezScreen>
                   ],
                 ),
               ),
+              Row(
+                children: <Widget>[],
+              ),
               Spacer(flex: 2),
               Consumer(
                 builder: (BuildContext context, JuarezProvider juarez,
@@ -373,65 +363,59 @@ class _JuarezScreenState extends State<JuarezScreen>
                       Spacer(
                         flex: 2,
                       ),
-                      Visibility(
-                        maintainState: true,
-                        maintainAnimation: true,
-                        maintainSize: true,
-                        visible: !juarez.hasBegun || juarez.isResting,
-                        child: NeumorphicButton(
-                          padding: EdgeInsets.all(30),
-                          onPressed: () {
-                            if (!staticJuarez.hasBegun) {
-                              staticJuarez.start();
-                            } else if (staticJuarez.isResting &&
-                                !staticJuarez.paused) {
-                              staticJuarez.onClickPause();
-                              controller.stop();
-                              controller.value = (staticJuarez.rest -
-                                      staticJuarez.pausedTime -
-                                      1) /
-                                  staticJuarez.rest;
-                            } else if (staticJuarez.isResting &&
-                                staticJuarez.paused) {
-                              staticJuarez.onClickResume();
-                              controller.forward(from: controller.value);
-                            }
-                          },
-                          boxShape: NeumorphicBoxShape.circle(),
-                          child: Icon(
-                            !juarez.isResting || juarez.paused
-                                ? FontAwesomeIcons.play
-                                : FontAwesomeIcons.pause,
-                            color: kAccentColor,
-                            size: 40,
-                          ),
-                          style: NeumorphicStyle(color: kMainColor),
+                      NeumorphicButton(
+                        isEnabled: !juarez.hasBegun || juarez.isResting,
+                        padding: EdgeInsets.all(30),
+                        onPressed: () {
+                          if (!staticJuarez.hasBegun) {
+                            staticJuarez.start();
+                          } else if (staticJuarez.isResting &&
+                              !staticJuarez.paused) {
+                            staticJuarez.onClickPause();
+                            controller.stop();
+                            controller.value = (staticJuarez.rest -
+                                    staticJuarez.pausedTime -
+                                    1) /
+                                staticJuarez.rest;
+                          } else if (staticJuarez.isResting &&
+                              staticJuarez.paused) {
+                            staticJuarez.onClickResume();
+                            controller.forward(from: controller.value);
+                          }
+                        },
+                        boxShape: NeumorphicBoxShape.circle(),
+                        child: Icon(
+                          !juarez.isResting || juarez.paused
+                              ? FontAwesomeIcons.play
+                              : FontAwesomeIcons.pause,
+                          color: kAccentColor,
+                          size: 40,
                         ),
+                        style: NeumorphicStyle(color: kMainColor),
                       ),
                       Spacer(
                         flex: 2,
                       ),
-                      Visibility(
-                        maintainAnimation: true,
-                        maintainSize: true,
-                        maintainState: true,
-                        visible: juarez.hasBegun,
-                        child: NeumorphicButton(
-                          onPressed: () {
-                            if (!staticJuarez.isResting &&
-                                staticJuarez.hasBegun) {
-                              staticJuarez.onClickRepFinished();
-                              controller
-                                ..duration =
-                                    Duration(seconds: staticJuarez.rest + 1);
-                              controller.forward(from: 0);
-                            }
-                          },
-                          boxShape: NeumorphicBoxShape.circle(),
-                          child: Icon(FontAwesomeIcons.stepForward,
-                              color: kAccentColor),
-                          style: NeumorphicStyle(color: kMainColor),
-                        ),
+                      NeumorphicButton(
+                        isEnabled: juarez.hasBegun,
+                        onPressed: () {
+                          if (!staticJuarez.isResting &&
+                              staticJuarez.hasBegun) {
+                            staticJuarez.onClickRepFinished();
+                            controller
+                              ..duration =
+                                  Duration(seconds: staticJuarez.rest + 1);
+                            controller.forward(from: 0);
+                          } else if (staticJuarez.isResting) {
+                            staticJuarez.onClickSkip();
+                            controller.stop();
+                            controller.value = 0.0;
+                          }
+                        },
+                        boxShape: NeumorphicBoxShape.circle(),
+                        child: Icon(FontAwesomeIcons.stepForward,
+                            color: kAccentColor),
+                        style: NeumorphicStyle(color: kMainColor),
                       ),
                       Spacer(
                         flex: 1,
