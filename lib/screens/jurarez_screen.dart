@@ -247,7 +247,8 @@ class _JuarezScreenState extends State<JuarezScreen>
                         child: Neumorphic(
                           padding: EdgeInsets.all(5),
                           boxShape: NeumorphicBoxShape.circle(),
-                          style: NeumorphicStyle(depth: -2, color: Colors.blueGrey[200]),
+                          style: NeumorphicStyle(
+                              depth: -2, color: Colors.blueGrey[200]),
                           child: Consumer(
                             builder: (BuildContext context,
                                 JuarezProvider juarez, Widget child) {
@@ -264,9 +265,7 @@ class _JuarezScreenState extends State<JuarezScreen>
                                                 children: <Widget>[
                                                   Text("REST",
                                                       style: TextStyle(
-                                                          fontFamily:
-                                                              'DungGeunMo',
-                                                          fontSize: 30,
+                                                          fontSize: 25,
                                                           color:
                                                               kDarkerAccentColor)),
                                                   Lcd(context).Number(
@@ -300,9 +299,7 @@ class _JuarezScreenState extends State<JuarezScreen>
                                                 children: <Widget>[
                                                   Text("REPS",
                                                       style: TextStyle(
-                                                          fontFamily:
-                                                              'DungGeunMo',
-                                                          fontSize: 30,
+                                                          fontSize: 25,
                                                           color:
                                                               kDarkerAccentColor)),
                                                   Lcd(context).Number(
@@ -333,8 +330,7 @@ class _JuarezScreenState extends State<JuarezScreen>
                                         : Text(
                                             "START",
                                             style: TextStyle(
-                                                fontFamily: 'DungGeunMo',
-                                                fontSize: 50,
+                                                fontSize: 45,
                                                 color: kDarkerAccentColor),
                                           )),
                               );
@@ -463,19 +459,32 @@ class CircularIndicatorPainter extends CustomPainter {
       : super(repaint: animation);
   @override
   void paint(Canvas canvas, Size size) {
-    final myPaint = Paint()
-      ..color = Colors.greenAccent
-      ..strokeWidth = 5
+    final outterPaint = Paint()
+      ..color = Color(0xff2deffc)
+      ..strokeWidth = 7
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke;
+    final shinyPaint = Paint()
+      ..color = Color(0xff2deffc).withOpacity(0.15)
+      ..strokeWidth = 17
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
 
-    double radius = (size.width / 2 - myPaint.strokeWidth / 2) - 3;
+    double radius = (size.width / 2 - outterPaint.strokeWidth / 2) - 3;
     Offset center = Offset(size.width / 2, size.height / 2);
     double arcAngle =
         staticJuarez.isResting ? (1.0 - animation.value) * 2 * pi : 2 * pi;
 
+    outterPaint.shader = LinearGradient(
+            end: Alignment.bottomCenter,
+            begin: Alignment.topCenter,
+            colors: [Color(0xff2deffc), Color(0xff1ca6b0)])
+        .createShader(Rect.fromCircle(center: center, radius: radius));
+
     canvas.drawArc(Rect.fromCircle(center: center, radius: radius), -pi / 2,
-        arcAngle, false, myPaint);
+        arcAngle, false, outterPaint);
+    canvas.drawArc(Rect.fromCircle(center: center, radius: radius + 2), -pi / 2,
+        arcAngle, false, shinyPaint);
   }
 
   @override
