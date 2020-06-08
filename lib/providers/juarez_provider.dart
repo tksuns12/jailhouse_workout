@@ -20,7 +20,6 @@ class JuarezProvider with ChangeNotifier {
   bool hasBegun = false;
   bool paused;
   int pausedTime;
-  AnimationController controller;
 
   
 

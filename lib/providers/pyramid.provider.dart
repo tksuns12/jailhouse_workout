@@ -23,13 +23,10 @@ class PyramidProvider with ChangeNotifier {
   int pausedTime;
   bool paused;
 
-  PyramidProvider() {
+  void initialize() {
     _height = Hive.box('AppData').get(kPyramidHeightKey);
     restWeight = Hive.box('AppData').get(kPyramidRestWeightKey);
     player = AudioCache();
-  }
-
-  void initialize() {
     isDone = false;
     isResting = false;
     hasBegun = true;
@@ -64,13 +61,13 @@ class PyramidProvider with ChangeNotifier {
     } else {
       isResting = true;
       setTimer(rest[0]);
-      rest.removeAt(0);
+      
     }
   }
 
   void onClickPause() {
     timer.cancel();
-    pausedTime = int.parse(displayedRestingTime);
+    pausedTime = int.parse(displayedRestingTime)-1;
     paused = true;
     notifyListeners();
   }
@@ -78,6 +75,17 @@ class PyramidProvider with ChangeNotifier {
   void onClickResume() {
     paused = false;
     setTimer(pausedTime);
+  }
+
+  void onClickSkip() async {
+    if (isResting) {
+      timer.cancel();
+      isResting = false;
+      displayedReps = reps.first.toString();
+      reps.removeAt(0);
+      await player.play("sounds/long_beep.mp3");
+      notifyListeners();
+    }
   }
 
   void setHeight(int newHeight) {
@@ -103,6 +111,7 @@ class PyramidProvider with ChangeNotifier {
         }
       } else {
         displayedReps = reps.first.toString();
+        rest.removeAt(0);
         reps.removeAt(0);
         await player.play('sounds/long_beep.mp3');
         isResting = false;

@@ -94,7 +94,8 @@ class _JuarezScreenState extends State<JuarezScreen>
                                               enabledBorder: InputBorder.none,
                                               border: InputBorder.none,
                                               hintText:
-                                                  "Enter Max Rep of Juarez",
+                                                  "Enter Max Rep",
+                                                  
                                               contentPadding:
                                                   EdgeInsets.all(10)),
                                           keyboardType: TextInputType.number,
