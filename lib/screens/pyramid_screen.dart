@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:digital_lcd/digital_lcd.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,12 +20,28 @@ class _PyramidScreenState extends State<PyramidScreen>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   PyramidProvider staticPyramid;
+  static MobileAdTargetingInfo mobileAdTargetingInfo = MobileAdTargetingInfo(
+      contentUrl:
+          'https://www.muscleandfitness.com/workouts/workout-routines/jailhouse-strong-pushup-challenge/',
+      testDevices: [],
+      keywords: ['workout', 'gym', 'calisthenics', 'jail', 'exercise', 'diet'],
+      childDirected: false);
+
+  BannerAd bannerAd = BannerAd(
+    adUnitId: "ca-app-pub-4385209419925513/8799793750",
+    size: AdSize.smartBanner,
+    targetingInfo: mobileAdTargetingInfo,
+    listener: (event) => print("$event"),
+  );
 
   @override
   void initState() {
     super.initState();
     staticPyramid = Provider.of<PyramidProvider>(context, listen: false);
     controller = AnimationController(vsync: this);
+    bannerAd
+      ..load()
+      ..show(anchorType: AnchorType.bottom);
   }
 
   @override
@@ -64,12 +81,16 @@ class _PyramidScreenState extends State<PyramidScreen>
                     child: Icon(Icons.arrow_back, color: kAccentColor),
                     style: NeumorphicStyle(color: kMainColor),
                   ),
-                  Spacer(flex: 2,),
+                  Spacer(
+                    flex: 2,
+                  ),
                   Text(
                     "Pyramid",
                     style: TextStyle(fontSize: 25, color: kAccentColor),
                   ),
-                  Spacer(flex: 2,),
+                  Spacer(
+                    flex: 2,
+                  ),
                   Consumer(
                     builder: (BuildContext context, PyramidProvider juarez,
                         Widget child) {
@@ -91,7 +112,8 @@ class _PyramidScreenState extends State<PyramidScreen>
                                       Neumorphic(
                                         child: TextFormField(
                                           textAlign: TextAlign.center,
-                                          decoration: InputDecoration(helperText: "Max Rep",
+                                          decoration: InputDecoration(
+                                              helperText: "Max Rep",
                                               enabledBorder: InputBorder.none,
                                               border: InputBorder.none,
                                               hintText:
@@ -131,12 +153,16 @@ class _PyramidScreenState extends State<PyramidScreen>
                                       ),
                                       Neumorphic(
                                         child: TextFormField(
-                                          decoration: InputDecoration(contentPadding: EdgeInsets.all(10),helperText: "Rest per Rep",
+                                          decoration: InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.all(10),
+                                              helperText: "Rest per Rep",
                                               border: InputBorder.none,
                                               hintText: "Enter Rest per Rep"),
                                           textAlign: TextAlign.center,
                                           controller: TextEditingController()
-                                            ..text = "${staticPyramid.restWeight}",
+                                            ..text =
+                                                "${staticPyramid.restWeight}",
                                           validator: (value) {
                                             if (value.length == 0) {
                                               return 'Enter Some Number';
@@ -182,7 +208,8 @@ class _PyramidScreenState extends State<PyramidScreen>
                                           staticPyramid
                                               .setRestWeight(int.parse(rest));
                                           await Hive.box("AppData").put(
-                                              kPyramidRestWeightKey, int.parse(rest));
+                                              kPyramidRestWeightKey,
+                                              int.parse(rest));
                                         }
                                         staticPyramid.initialize();
                                         Navigator.of(context).pop();
@@ -490,12 +517,11 @@ class _PyramidScreenState extends State<PyramidScreen>
                             staticPyramid.onClickRepFinished();
                             if (staticPyramid.reps.length != 0) {
                               controller
-                                ..duration =
-                                    Duration(seconds: staticPyramid.rest[0] + 1);
+                                ..duration = Duration(
+                                    seconds: staticPyramid.rest[0] + 1);
                               controller.forward(from: 0);
                             }
                           } else if (staticPyramid.isResting) {
-                            
                             controller.stop();
                             controller.value = 0.0;
                             staticPyramid.onClickSkip();

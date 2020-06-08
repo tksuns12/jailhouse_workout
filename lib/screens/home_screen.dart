@@ -1,3 +1,4 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,6 +20,28 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  static MobileAdTargetingInfo mobileAdTargetingInfo = MobileAdTargetingInfo(
+      contentUrl:
+          'https://www.muscleandfitness.com/workouts/workout-routines/jailhouse-strong-pushup-challenge/',
+      testDevices: [],
+      keywords: ['workout', 'gym', 'calisthenics', 'jail', 'exercise', 'diet'],
+      childDirected: false);
+
+  BannerAd bannerAd = BannerAd(
+    adUnitId: "ca-app-pub-4385209419925513/8799793750",
+    size: AdSize.smartBanner,
+    targetingInfo: mobileAdTargetingInfo,
+    listener: (event) => print("$event"),
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    bannerAd
+      ..load()
+      ..show(anchorType: AnchorType.bottom);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer3(
