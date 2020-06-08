@@ -91,7 +91,7 @@ class _PyramidScreenState extends State<PyramidScreen>
                                       Neumorphic(
                                         child: TextFormField(
                                           textAlign: TextAlign.center,
-                                          decoration: InputDecoration(
+                                          decoration: InputDecoration(helperText: "Max Rep",
                                               enabledBorder: InputBorder.none,
                                               border: InputBorder.none,
                                               hintText:
@@ -131,7 +131,7 @@ class _PyramidScreenState extends State<PyramidScreen>
                                       ),
                                       Neumorphic(
                                         child: TextFormField(
-                                          decoration: InputDecoration(
+                                          decoration: InputDecoration(contentPadding: EdgeInsets.all(10),helperText: "Rest per Rep",
                                               border: InputBorder.none,
                                               hintText: "Enter Rest per Rep"),
                                           textAlign: TextAlign.center,

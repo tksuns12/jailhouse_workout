@@ -91,11 +91,10 @@ class _JuarezScreenState extends State<JuarezScreen>
                                         child: TextFormField(
                                           textAlign: TextAlign.center,
                                           decoration: InputDecoration(
+                                              helperText: "Max Rep",
                                               enabledBorder: InputBorder.none,
                                               border: InputBorder.none,
-                                              hintText:
-                                                  "Enter Max Rep",
-                                                  
+                                              hintText: "Enter Max Rep",
                                               contentPadding:
                                                   EdgeInsets.all(10)),
                                           keyboardType: TextInputType.number,
@@ -132,6 +131,9 @@ class _JuarezScreenState extends State<JuarezScreen>
                                       Neumorphic(
                                         child: TextFormField(
                                           decoration: InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.all(10),
+                                              helperText: "Rest Time",
                                               border: InputBorder.none,
                                               hintText: "Enter Rest Time"),
                                           textAlign: TextAlign.center,
