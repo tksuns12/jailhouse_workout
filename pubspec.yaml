@@ -37,7 +37,9 @@ dependencies:
   wakelock: ^ 0.1.4+1
   flutter_neumorphic: ^2.2.2
   digital_lcd: ^1.0.2
-  animations: ^1.1.0
+  firebase_auth: ^0.16.1
+  cloud_firestore: ^0.13.6
+
 
 dev_dependencies:
   flutter_test:

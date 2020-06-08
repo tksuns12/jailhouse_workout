@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "883209863101",
+    "firebase_url": "https://jailhouse-workout-routine.firebaseio.com",
+    "project_id": "jailhouse-workout-routine",
+    "storage_bucket": "jailhouse-workout-routine.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883209863101:android:82ea8797487ffdb0769cd4",
+        "android_client_info": {
+          "package_name": "com.crimsonfoot.jailhouseworkout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883209863101-5jbbum5qde09jsrv7sfmbus2us6hd4sd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRI0LUrjdOSSqoCkKJxoc3fz6fc03sQSQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883209863101-5jbbum5qde09jsrv7sfmbus2us6hd4sd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-4385209419925513~8991365446"
+    }
+  ],
+  "configuration_version": "1"
+}
