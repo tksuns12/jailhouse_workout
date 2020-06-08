@@ -64,12 +64,12 @@ class _PyramidScreenState extends State<PyramidScreen>
                     child: Icon(Icons.arrow_back, color: kAccentColor),
                     style: NeumorphicStyle(color: kMainColor),
                   ),
-                  Spacer(),
+                  Spacer(flex: 2,),
                   Text(
-                    "Juarez Valley",
+                    "Pyramid",
                     style: TextStyle(fontSize: 25, color: kAccentColor),
                   ),
-                  Spacer(),
+                  Spacer(flex: 2,),
                   Consumer(
                     builder: (BuildContext context, PyramidProvider juarez,
                         Widget child) {
