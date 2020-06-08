@@ -24,7 +24,7 @@ class _PyramidScreenState extends State<PyramidScreen>
       contentUrl:
           'https://www.muscleandfitness.com/workouts/workout-routines/jailhouse-strong-pushup-challenge/',
       testDevices: [],
-      keywords: ['workout', 'gym', 'calisthenics', 'jail', 'exercise', 'diet'],
+      keywords: ['workout'],
       childDirected: false);
 
   BannerAd bannerAd = BannerAd(
