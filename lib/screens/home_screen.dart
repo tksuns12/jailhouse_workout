@@ -22,8 +22,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   static MobileAdTargetingInfo mobileAdTargetingInfo = MobileAdTargetingInfo(
       contentUrl:
-          'https://www.muscleandfitness.com/workouts/workout-routines/jailhouse-strong-pushup-challenge/',
-      testDevices: [],
+          'https://flutter.dev',
+      testDevices: ["6EAC7A5ADE81922E8DEAAC9CD837C554"],
       keywords: ['workout'],
       childDirected: false);
 

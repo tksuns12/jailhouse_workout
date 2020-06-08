@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "883209863101",
-    "firebase_url": "https://jailhouse-workout-routine.firebaseio.com",
-    "project_id": "jailhouse-workout-routine",
-    "storage_bucket": "jailhouse-workout-routine.appspot.com"
+    "project_number": "660991273496",
+    "firebase_url": "https://jailhouseworkout-2214c.firebaseio.com",
+    "project_id": "jailhouseworkout-2214c",
+    "storage_bucket": "jailhouseworkout-2214c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:883209863101:android:82ea8797487ffdb0769cd4",
+        "mobilesdk_app_id": "1:660991273496:android:80da214e2cb18e8c86316d",
         "android_client_info": {
           "package_name": "com.crimsonfoot.jailhouseworkout"
         }
       },
       "oauth_client": [
         {
-          "client_id": "883209863101-5jbbum5qde09jsrv7sfmbus2us6hd4sd.apps.googleusercontent.com",
+          "client_id": "660991273496-gfr8s0hmgh4rfl3r48p70qth0bsmdiv6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCRI0LUrjdOSSqoCkKJxoc3fz6fc03sQSQ"
+          "current_key": "AIzaSyCoxgt44brWI8FdXgpo1y4owt7uweB1xWA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "883209863101-5jbbum5qde09jsrv7sfmbus2us6hd4sd.apps.googleusercontent.com",
+              "client_id": "660991273496-gfr8s0hmgh4rfl3r48p70qth0bsmdiv6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
