@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore: ^0.13.6
   firebase_admob: ^0.9.3+2
   firebase_core: ^0.4.5
+  flutte_native_admob: ^2.1.0
 
 
 dev_dependencies:
