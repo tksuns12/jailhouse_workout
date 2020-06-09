@@ -81,7 +81,8 @@ class DeckOfDeathScreen extends StatelessWidget {
                                             child: NeumorphicSwitch(
                                               style: NeumorphicSwitchStyle(
                                                   activeTrackColor:
-                                                      Colors.blueGrey),
+                                                      Color(0xff2deffc)),
+                                                      // TODO: 이거 좀 더 어두운 색으로 바꿔라
                                               value: deck.isInfinite,
                                               onChanged: (value) {
                                                 deck.changeInfiniteMode();
@@ -118,7 +119,7 @@ class DeckOfDeathScreen extends StatelessWidget {
                                       : Center(
                                           child: Text(
                                             "SHUFFLE!",
-                                            style: TextStyle(fontSize: 40),
+                                            style: TextStyle(fontSize: 40, color: kDarkerAccentColor),
                                             key: ValueKey(2),
                                             textAlign: TextAlign.center,
                                           ),

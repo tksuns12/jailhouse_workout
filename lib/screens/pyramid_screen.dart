@@ -415,7 +415,7 @@ class _PyramidScreenState extends State<PyramidScreen>
                                       lcdWidth:
                                           MediaQuery.of(context).size.width *
                                               0.15,
-                                      lcdHeight: 50,
+                                      lcdHeight: MediaQuery.of(context).size.height * 0.07,
                                       segmentWidth: 8,
                                     )
                                   ]),
@@ -440,7 +440,7 @@ class _PyramidScreenState extends State<PyramidScreen>
                                     lcdWidth:
                                         MediaQuery.of(context).size.width *
                                             0.15,
-                                    lcdHeight: 50,
+                                    lcdHeight: MediaQuery.of(context).size.height * 0.07,
                                     segmentWidth: 8,
                                   )
                                 ],

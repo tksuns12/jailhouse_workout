@@ -230,10 +230,10 @@ class _JuarezScreenState extends State<JuarezScreen>
                   Spacer(),
                 ],
               ),
-              Spacer(flex: 4),
+              Spacer(flex: 2),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.width * 0.8,
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: MediaQuery.of(context).size.width * 0.7,
                 child: Stack(
                   children: [
                     Neumorphic(
@@ -345,7 +345,7 @@ class _JuarezScreenState extends State<JuarezScreen>
                                             : Text(
                                                 "START",
                                                 style: TextStyle(
-                                                    fontSize: 45,
+                                                    fontSize: 35,
                                                     color: kDarkerAccentColor),
                                               )),
                               );
@@ -406,7 +406,7 @@ class _JuarezScreenState extends State<JuarezScreen>
                                       lcdWidth:
                                           MediaQuery.of(context).size.width *
                                               0.15,
-                                      lcdHeight: 50,
+                                      lcdHeight: MediaQuery.of(context).size.height * 0.07,
                                       segmentWidth: 8,
                                     )
                                   ]),
@@ -431,7 +431,7 @@ class _JuarezScreenState extends State<JuarezScreen>
                                     lcdWidth:
                                         MediaQuery.of(context).size.width *
                                             0.15,
-                                    lcdHeight: 50,
+                                    lcdHeight: MediaQuery.of(context).size.height * 0.07,
                                     segmentWidth: 8,
                                   )
                                 ],
@@ -469,7 +469,6 @@ class _JuarezScreenState extends State<JuarezScreen>
                       ),
                       NeumorphicButton(
                         isEnabled: !juarez.hasBegun || juarez.isResting,
-                        padding: EdgeInsets.all(30),
                         onPressed: () {
                           if (!staticJuarez.hasBegun) {
                             staticJuarez.start();
@@ -493,7 +492,6 @@ class _JuarezScreenState extends State<JuarezScreen>
                               ? FontAwesomeIcons.play
                               : FontAwesomeIcons.pause,
                           color: kAccentColor,
-                          size: 40,
                         ),
                         style: NeumorphicStyle(color: kMainColor),
                       ),
@@ -531,7 +529,7 @@ class _JuarezScreenState extends State<JuarezScreen>
                 },
               ),
               Spacer(
-                flex: 4,
+                flex: 10,
               ),
             ],
           ),

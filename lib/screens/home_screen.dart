@@ -112,7 +112,7 @@ class _MainScreenState extends State<MainScreen> {
                     child: Center(
                       child: Text(
                         "Juarez Valley",
-                        style: TextStyle(fontSize: 30, color: kAccentColor),
+                        style: TextStyle(fontSize: 30, color: kDarkerAccentColor),
                       ),
                     ),
                   ),
@@ -141,7 +141,7 @@ class _MainScreenState extends State<MainScreen> {
                       child: Text(
                         "Pyramid\n&\nReverse Pyramid",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 30, color: kAccentColor),
+                        style: TextStyle(fontSize: 30, color: kDarkerAccentColor),
                       ),
                     ),
                   ),
@@ -169,7 +169,7 @@ class _MainScreenState extends State<MainScreen> {
                     child: Center(
                       child: Text(
                         "Deck of Death",
-                        style: TextStyle(fontSize: 30, color: kAccentColor),
+                        style: TextStyle(fontSize: 30, color: kDarkerAccentColor),
                       ),
                     ),
                   ),
@@ -182,7 +182,7 @@ class _MainScreenState extends State<MainScreen> {
                       depth: 10,
                       lightSource: LightSource.topLeft),
                 ),
-                Spacer(),
+                Spacer(flex: 3),
               ],
             ),
           ),
