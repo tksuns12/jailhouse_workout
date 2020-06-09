@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:digital_lcd/digital_lcd.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -21,8 +19,7 @@ class _PyramidScreenState extends State<PyramidScreen>
   AnimationController controller;
   PyramidProvider staticPyramid;
   static MobileAdTargetingInfo mobileAdTargetingInfo = MobileAdTargetingInfo(
-      contentUrl:
-          'https://flutter.dev',
+      contentUrl: 'https://flutter.dev',
       testDevices: ["6EAC7A5ADE81922E8DEAAC9CD837C554"],
       keywords: ['workout'],
       childDirected: false);
@@ -48,6 +45,7 @@ class _PyramidScreenState extends State<PyramidScreen>
   void dispose() {
     super.dispose();
     controller.dispose();
+    bannerAd.dispose();
   }
 
   @override
@@ -92,7 +90,7 @@ class _PyramidScreenState extends State<PyramidScreen>
                     flex: 2,
                   ),
                   Consumer(
-                    builder: (BuildContext context, PyramidProvider juarez,
+                    builder: (BuildContext context, PyramidProvider pyramid,
                         Widget child) {
                       return NeumorphicButton(
                         onPressed: () {
@@ -232,7 +230,7 @@ class _PyramidScreenState extends State<PyramidScreen>
                         boxShape: NeumorphicBoxShape.circle(),
                         child: Icon(FontAwesomeIcons.cog, color: kAccentColor),
                         style: NeumorphicStyle(color: kMainColor),
-                        isEnabled: !juarez.hasBegun,
+                        isEnabled: !pyramid.hasBegun,
                       );
                     },
                   ),
@@ -241,8 +239,8 @@ class _PyramidScreenState extends State<PyramidScreen>
               ),
               Spacer(flex: 4),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.width * 0.8,
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: MediaQuery.of(context).size.width * 0.7,
                 child: Stack(
                   children: [
                     Neumorphic(
@@ -268,19 +266,19 @@ class _PyramidScreenState extends State<PyramidScreen>
                               depth: -2, color: Colors.blueGrey[200]),
                           child: Consumer(
                             builder: (BuildContext context,
-                                PyramidProvider juarez, Widget child) {
+                                PyramidProvider pyramid, Widget child) {
                               return Neumorphic(
                                 boxShape: NeumorphicBoxShape.circle(),
                                 style: NeumorphicStyle(
                                     depth: 7, color: kMainColor),
                                 child: Center(
-                                    child: juarez.isDone
+                                    child: pyramid.isDone
                                         ? Text("Well Done!",
                                             style: TextStyle(
                                                 fontSize: 25,
                                                 color: kDarkerAccentColor))
-                                        : juarez.hasBegun
-                                            ? juarez.isResting
+                                        : pyramid.hasBegun
+                                            ? pyramid.isResting
                                                 ? Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -291,29 +289,14 @@ class _PyramidScreenState extends State<PyramidScreen>
                                                               fontSize: 25,
                                                               color:
                                                                   kDarkerAccentColor)),
-                                                      Lcd(context).Number(
-                                                        activeColor: Colors.red,
-                                                        lcdDecoration:
-                                                            BoxDecoration(
-                                                                color: Colors
-                                                                    .transparent),
-                                                        number: int.parse(juarez
-                                                            .displayedRestingTime),
-                                                        digitCount: 2,
-                                                        lcdPadding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 0),
-                                                        digitAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        lcdWidth: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.2,
-                                                        lcdHeight: 80,
-                                                        segmentWidth: 8,
-                                                      ),
+                                                      Text(
+                                                          "${pyramid.displayedRestingTime.toString().padLeft(2, '0')}",
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "PocketCal",
+                                                            fontSize: 70,
+                                                            color: kNumberColor,
+                                                          )),
                                                     ],
                                                   )
                                                 : Column(
@@ -326,35 +309,20 @@ class _PyramidScreenState extends State<PyramidScreen>
                                                               fontSize: 25,
                                                               color:
                                                                   kDarkerAccentColor)),
-                                                      Lcd(context).Number(
-                                                        activeColor: Colors.red,
-                                                        lcdDecoration:
-                                                            BoxDecoration(
-                                                                color: Colors
-                                                                    .transparent),
-                                                        number: int.parse(juarez
-                                                            .displayedReps),
-                                                        digitCount: 2,
-                                                        lcdPadding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 0),
-                                                        digitAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        lcdWidth: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.2,
-                                                        lcdHeight: 80,
-                                                        segmentWidth: 8,
-                                                      )
+                                                      Text(
+                                                          "${pyramid.displayedReps.toString().padLeft(2, '0')}",
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "PocketCal",
+                                                            fontSize: 70,
+                                                            color: kNumberColor,
+                                                          ))
                                                     ],
                                                   )
                                             : Text(
                                                 "START",
                                                 style: TextStyle(
-                                                    fontSize: 45,
+                                                    fontSize: 35,
                                                     color: kDarkerAccentColor),
                                               )),
                               );
@@ -386,9 +354,9 @@ class _PyramidScreenState extends State<PyramidScreen>
                       boxShape: NeumorphicBoxShape.roundRect(
                           BorderRadius.circular(10)),
                       child: Consumer(builder: (BuildContext context,
-                          PyramidProvider juarez, Widget child) {
+                          PyramidProvider pyramid, Widget child) {
                         return Visibility(
-                          visible: juarez.hasBegun,
+                          visible: pyramid.hasBegun,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -401,23 +369,12 @@ class _PyramidScreenState extends State<PyramidScreen>
                                           TextStyle(color: kDarkerAccentColor),
                                       textAlign: TextAlign.center,
                                     ),
-                                    Lcd(context).Number(
-                                      activeColor: Colors.red,
-                                      lcdDecoration: BoxDecoration(
-                                          color: Colors.transparent),
-                                      number: staticPyramid.reps.length == 0
-                                          ? 0
-                                          : staticPyramid.reps[0],
-                                      digitCount: 2,
-                                      lcdPadding:
-                                          EdgeInsets.symmetric(horizontal: 0),
-                                      digitAlignment: MainAxisAlignment.center,
-                                      lcdWidth:
-                                          MediaQuery.of(context).size.width *
-                                              0.15,
-                                      lcdHeight: MediaQuery.of(context).size.height * 0.07,
-                                      segmentWidth: 8,
-                                    )
+                                    Text(
+                                        "${(staticPyramid.reps.length == 0 ? 0 : staticPyramid.reps[0]).toString().padLeft(2, '0')}",
+                                        style: TextStyle(
+                                            fontFamily: "PocketCal",
+                                            color: kNumberColor,
+                                            fontSize: 50)),
                                   ]),
                               SizedBox(width: 20),
                               Column(
@@ -428,21 +385,12 @@ class _PyramidScreenState extends State<PyramidScreen>
                                     style: TextStyle(color: kDarkerAccentColor),
                                     textAlign: TextAlign.center,
                                   ),
-                                  Lcd(context).Number(
-                                    activeColor: Colors.red,
-                                    lcdDecoration: BoxDecoration(
-                                        color: Colors.transparent),
-                                    number: staticPyramid.reps.length,
-                                    digitCount: 2,
-                                    lcdPadding:
-                                        EdgeInsets.symmetric(horizontal: 0),
-                                    digitAlignment: MainAxisAlignment.center,
-                                    lcdWidth:
-                                        MediaQuery.of(context).size.width *
-                                            0.15,
-                                    lcdHeight: MediaQuery.of(context).size.height * 0.07,
-                                    segmentWidth: 8,
-                                  )
+                                  Text(
+                                      "${staticPyramid.reps.length.toString().padLeft(2, '0')}",
+                                      style: TextStyle(
+                                          fontFamily: "PocketCal",
+                                          color: kNumberColor,
+                                          fontSize: 50)),
                                 ],
                               )
                             ],
@@ -453,7 +401,7 @@ class _PyramidScreenState extends State<PyramidScreen>
                   )),
               Spacer(flex: 2),
               Consumer(
-                builder: (BuildContext context, PyramidProvider juarez,
+                builder: (BuildContext context, PyramidProvider pyramid,
                     Widget child) {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -477,8 +425,7 @@ class _PyramidScreenState extends State<PyramidScreen>
                         flex: 2,
                       ),
                       NeumorphicButton(
-                        isEnabled: !juarez.hasBegun || juarez.isResting,
-                        padding: EdgeInsets.all(30),
+                        isEnabled: !pyramid.hasBegun || pyramid.isResting,
                         onPressed: () {
                           if (!staticPyramid.hasBegun) {
                             staticPyramid.start();
@@ -498,11 +445,10 @@ class _PyramidScreenState extends State<PyramidScreen>
                         },
                         boxShape: NeumorphicBoxShape.circle(),
                         child: Icon(
-                          !juarez.isResting || juarez.paused
+                          !pyramid.isResting || pyramid.paused
                               ? FontAwesomeIcons.play
                               : FontAwesomeIcons.pause,
                           color: kAccentColor,
-                          size: 40,
                         ),
                         style: NeumorphicStyle(color: kMainColor),
                       ),
@@ -510,7 +456,7 @@ class _PyramidScreenState extends State<PyramidScreen>
                         flex: 2,
                       ),
                       NeumorphicButton(
-                        isEnabled: juarez.hasBegun,
+                        isEnabled: pyramid.hasBegun,
                         onPressed: () {
                           if (!staticPyramid.isResting &&
                               staticPyramid.hasBegun) {
@@ -540,7 +486,7 @@ class _PyramidScreenState extends State<PyramidScreen>
                 },
               ),
               Spacer(
-                flex: 4,
+                flex: 10,
               ),
             ],
           ),

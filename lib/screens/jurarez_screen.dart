@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:digital_lcd/digital_lcd.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -20,8 +19,7 @@ class _JuarezScreenState extends State<JuarezScreen>
   AnimationController controller;
   JuarezProvider staticJuarez;
   static MobileAdTargetingInfo mobileAdTargetingInfo = MobileAdTargetingInfo(
-      contentUrl:
-          'https://flutter.dev',
+      contentUrl: 'https://flutter.dev',
       testDevices: ["6EAC7A5ADE81922E8DEAAC9CD837C554"],
       keywords: ['workout'],
       childDirected: false);
@@ -47,6 +45,7 @@ class _JuarezScreenState extends State<JuarezScreen>
   void dispose() async {
     super.dispose();
     controller.dispose();
+    bannerAd.dispose();
   }
 
   @override
@@ -230,7 +229,7 @@ class _JuarezScreenState extends State<JuarezScreen>
                   Spacer(),
                 ],
               ),
-              Spacer(flex: 2),
+              Spacer(flex: 4),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: MediaQuery.of(context).size.width * 0.7,
@@ -282,29 +281,14 @@ class _JuarezScreenState extends State<JuarezScreen>
                                                               fontSize: 25,
                                                               color:
                                                                   kDarkerAccentColor)),
-                                                      Lcd(context).Number(
-                                                        activeColor: Colors.red,
-                                                        lcdDecoration:
-                                                            BoxDecoration(
-                                                                color: Colors
-                                                                    .transparent),
-                                                        number: int.parse(juarez
-                                                            .displayedRestingTime),
-                                                        digitCount: 2,
-                                                        lcdPadding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 0),
-                                                        digitAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        lcdWidth: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.2,
-                                                        lcdHeight: 80,
-                                                        segmentWidth: 8,
-                                                      ),
+                                                      Text(
+                                                          "${juarez.displayedRestingTime.toString().padLeft(2, '0')}",
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "PocketCal",
+                                                            fontSize: 70,
+                                                            color: kNumberColor,
+                                                          )),
                                                     ],
                                                   )
                                                 : Column(
@@ -317,29 +301,14 @@ class _JuarezScreenState extends State<JuarezScreen>
                                                               fontSize: 25,
                                                               color:
                                                                   kDarkerAccentColor)),
-                                                      Lcd(context).Number(
-                                                        activeColor: Colors.red,
-                                                        lcdDecoration:
-                                                            BoxDecoration(
-                                                                color: Colors
-                                                                    .transparent),
-                                                        number: int.parse(juarez
-                                                            .displayedReps),
-                                                        digitCount: 2,
-                                                        lcdPadding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 0),
-                                                        digitAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        lcdWidth: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.2,
-                                                        lcdHeight: 80,
-                                                        segmentWidth: 8,
-                                                      )
+                                                      Text(
+                                                          "${juarez.displayedReps.toString().padLeft(2, '0')}",
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "PocketCal",
+                                                            fontSize: 70,
+                                                            color: kNumberColor,
+                                                          ))
                                                     ],
                                                   )
                                             : Text(
@@ -392,22 +361,12 @@ class _JuarezScreenState extends State<JuarezScreen>
                                           TextStyle(color: kDarkerAccentColor),
                                       textAlign: TextAlign.center,
                                     ),
-                                    Lcd(context).Number(
-                                      activeColor: Colors.red,
-                                      lcdDecoration: BoxDecoration(
-                                          color: Colors.transparent),
-                                      number: staticJuarez.reps.length == 0
-                                          ? 0
-                                          : staticJuarez.reps[0],
-                                      digitCount: 2,
-                                      lcdPadding:
-                                          EdgeInsets.symmetric(horizontal: 0),
-                                      digitAlignment: MainAxisAlignment.center,
-                                      lcdWidth:
-                                          MediaQuery.of(context).size.width *
-                                              0.15,
-                                      lcdHeight: MediaQuery.of(context).size.height * 0.07,
-                                      segmentWidth: 8,
+                                    Text(
+                                      "${(staticJuarez.reps.length == 0 ? 0 : staticJuarez.reps[0]).toString().padLeft(2, '0')}",
+                                      style: TextStyle(
+                                          fontFamily: "PocketCal",
+                                          color: kNumberColor,
+                                          fontSize: 50),
                                     )
                                   ]),
                               SizedBox(width: 20),
@@ -419,20 +378,12 @@ class _JuarezScreenState extends State<JuarezScreen>
                                     style: TextStyle(color: kDarkerAccentColor),
                                     textAlign: TextAlign.center,
                                   ),
-                                  Lcd(context).Number(
-                                    activeColor: Colors.red,
-                                    lcdDecoration: BoxDecoration(
-                                        color: Colors.transparent),
-                                    number: staticJuarez.reps.length,
-                                    digitCount: 2,
-                                    lcdPadding:
-                                        EdgeInsets.symmetric(horizontal: 0),
-                                    digitAlignment: MainAxisAlignment.center,
-                                    lcdWidth:
-                                        MediaQuery.of(context).size.width *
-                                            0.15,
-                                    lcdHeight: MediaQuery.of(context).size.height * 0.07,
-                                    segmentWidth: 8,
+                                  Text(
+                                    "${juarez.reps.length}",
+                                    style: TextStyle(
+                                        fontFamily: "PocketCal",
+                                        color: kNumberColor,
+                                        fontSize: 50),
                                   )
                                 ],
                               )

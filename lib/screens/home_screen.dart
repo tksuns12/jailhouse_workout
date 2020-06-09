@@ -28,7 +28,7 @@ class _MainScreenState extends State<MainScreen> {
       childDirected: false);
 
   BannerAd bannerAd = BannerAd(
-    adUnitId: "ca-app-pub-4385209419925513/8799793750",
+    adUnitId: kAdUnitId,
     size: AdSize.smartBanner,
     targetingInfo: mobileAdTargetingInfo,
     listener: (event) => print("$event"),
@@ -40,6 +40,14 @@ class _MainScreenState extends State<MainScreen> {
     bannerAd
       ..load()
       ..show(anchorType: AnchorType.bottom);
+  }
+
+  @override
+  void dispose() {
+    
+    super.dispose();
+    bannerAd.dispose();
+
   }
 
   @override
