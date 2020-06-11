@@ -61,6 +61,7 @@ class PyramidProvider with ChangeNotifier {
     } else {
       isResting = true;
       setTimer(rest[0]);
+      rest.removeAt(0);
       
     }
   }
@@ -111,7 +112,6 @@ class PyramidProvider with ChangeNotifier {
         }
       } else {
         displayedReps = reps.first.toString();
-        rest.removeAt(0);
         reps.removeAt(0);
         await player.play('sounds/long_beep.mp3');
         isResting = false;

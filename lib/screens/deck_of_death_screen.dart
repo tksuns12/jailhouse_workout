@@ -99,6 +99,7 @@ class _DeckOfDeathScreenState extends State<DeckOfDeathScreen> {
                                       depth: 10),
                                 ),
                               ),
+                              SizedBox(height: 30),
                               SizedBox(
                                 height: 80,
                                 width: 200,
@@ -165,7 +166,7 @@ class _DeckOfDeathScreenState extends State<DeckOfDeathScreen> {
                                                     color: kDarkerAccentColor),
                                               ),
                                               Text(
-                                                "${deck.displayedCard.reps}",
+                                                "${deck.displayedCard.reps.toString().padLeft(2, '0')}",
                                                 style: TextStyle(
                                                     color: kNumberColor,
                                                     fontFamily: "PocketCal",
@@ -184,7 +185,7 @@ class _DeckOfDeathScreenState extends State<DeckOfDeathScreen> {
                                                     color: kDarkerAccentColor),
                                               ),
                                               Text(
-                                                "${deck.deck.length}",
+                                                "${deck.deck.length.toString().padLeft(2, '0')}",
                                                 style: TextStyle(
                                                     color: kNumberColor,
                                                     fontFamily: "PocketCal",
@@ -202,7 +203,7 @@ class _DeckOfDeathScreenState extends State<DeckOfDeathScreen> {
                               ),
                             ],
                           ),
-                          Spacer(flex: 2),
+                          Spacer(flex: 6),
                         ],
                       )),
           ),

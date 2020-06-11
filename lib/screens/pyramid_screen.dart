@@ -460,11 +460,11 @@ class _PyramidScreenState extends State<PyramidScreen>
                         onPressed: () {
                           if (!staticPyramid.isResting &&
                               staticPyramid.hasBegun) {
-                            staticPyramid.onClickRepFinished();
                             if (staticPyramid.reps.length != 0) {
                               controller
                                 ..duration = Duration(
                                     seconds: staticPyramid.rest[0] + 1);
+                              staticPyramid.onClickRepFinished();
                               controller.forward(from: 0);
                             }
                           } else if (staticPyramid.isResting) {
