@@ -39,6 +39,10 @@ dependencies:
   cloud_firestore: ^0.13.6
   firebase_admob: ^0.9.3+2
   firebase_core: ^0.4.5
+  path: ^1.7.0
+
+dependency_overrides:
+  path: ^1.6.4
 
 dev_dependencies:
   flutter_launcher_icons: ^0.7.5
