@@ -466,6 +466,8 @@ class _PyramidScreenState extends State<PyramidScreen>
                                     seconds: staticPyramid.rest[0] + 1);
                               staticPyramid.onClickRepFinished();
                               controller.forward(from: 0);
+                            }else if (staticPyramid.reps.length == 0) {
+                              staticPyramid.onClickRepFinished();
                             }
                           } else if (staticPyramid.isResting) {
                             controller.stop();
